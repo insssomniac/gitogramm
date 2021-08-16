@@ -20,7 +20,7 @@
     </topline>
   </div>
   <div class="global-container feed-container">
-    <post class="feed">
+    <post class="feed post">
       <template #repository-info>
         <h2 class="post__title">Vue.js</h2>
         <div class="post__desc"><b>JavaScript</b> framework for building interactive web applications ⚡</div>
