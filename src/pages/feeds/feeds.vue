@@ -4,7 +4,7 @@
       <template #headline>
         <div class="topline__container">
           <h1 class="topline__title">Gitogram /</h1>
-          <loggedAs avatar="https://picsum.photos/50/50" />
+          <logged-as avatar="https://picsum.photos/50/50" />
         </div>
       </template>
       <template #content>
@@ -24,7 +24,7 @@
       <template #repository-info>
         <h2 class="post__title">Vue.js</h2>
         <div class="post__desc"><b>JavaScript</b> framework for building interactive web applications ⚡</div>
-        <postButtons/>
+        <post-buttons quantity="156k" own-quantity="4" />
       </template>
     </post>
   </div>

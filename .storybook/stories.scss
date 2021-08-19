@@ -1,0 +1,39 @@
+.body {
+  margin: 10px;
+}
+
+.icons-default {
+  width: 55px;
+  height: 55px;
+}
+
+.topline__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.users {
+  display: flex;
+  justify-content: space-between;
+}
+
+.feed-container {
+  display: flex;
+  justify-content: center;
+}
+
+.feed {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.post__title {
+  font-size: 26px;
+  margin-bottom: 15px;
+  line-height: 1;
+}
+
+.post__desc {
+  margin-bottom: 33px;
+}

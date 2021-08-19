@@ -6,14 +6,14 @@
       </span>
       <span class="caption">Star</span>
     </button>
-    <div class="quantity">156k</div>
+    <div class="quantity">{{ quantity }}</div>
     <button class="post-button">
       <span class="icon-fork">
         <icon name="fork"/>
       </span>
       <span class="caption">Fork</span>
     </button>
-    <div class="own-quantity">4</div>
+    <div class="own-quantity">{{ ownQuantity }}</div>
   </div>
 </template>
 
@@ -24,6 +24,16 @@ export default {
   name: 'postButtons',
   components: {
     icon
+  },
+  props: {
+    quantity: {
+      type: String,
+      required: true
+    },
+    ownQuantity: {
+      type: String,
+      required: true
+    }
   }
 }
 </script>
