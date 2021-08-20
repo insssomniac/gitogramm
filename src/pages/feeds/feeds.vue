@@ -20,13 +20,19 @@
     </topline>
   </div>
   <div class="global-container feed-container">
-    <post class="feed post">
-      <template #repository-info>
-        <h2 class="post__title">Vue.js</h2>
-        <div class="post__desc"><b>JavaScript</b> framework for building interactive web applications ⚡</div>
-        <post-buttons quantity="156k" own-quantity="4" />
-      </template>
-    </post>
+    <ul class="feed">
+      <li class="post" v-for="item in items" :key="item.id">
+        <post v-bind="getFeedData(item)">
+          <template #repository-info>
+            <h2 class="post__title">vv</h2>
+            <div class="post__desc"><b>JavaScript</b> framework for building interactive web applications ⚡</div>
+            <post-buttons quantity="156k" own-quantity="4" />
+          </template>
+        </post>
+      </li>
+    </ul>
+
+    <pre>{{ items }}</pre>
   </div>
 </template>
 
@@ -37,6 +43,7 @@ import { userBlock } from '../../components/userBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
 import users from './data.json'
+import * as api from '../../api'
 
 export default {
   name: 'feeds',
@@ -49,7 +56,28 @@ export default {
   },
   data () {
     return {
-      users
+      users,
+      items: []
+    }
+  },
+  methods: {
+    getFeedData (item) {
+      return {
+        avatar: '',
+        username: '',
+        title: '',
+        desc: '',
+        quantity: '',
+        ownQuantity: ''
+      }
+    }
+  },
+  async created () {
+    try {
+      const { data } = await api.trendings.getTrendings()
+      this.items = data.items
+    } catch (e) {
+      console.error(e)
     }
   }
 }
@@ -68,13 +96,23 @@ export default {
 
 .feed-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .feed {
   display: flex;
   flex-direction: column;
   width: 80%;
+}
+
+.post {
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .post__title {

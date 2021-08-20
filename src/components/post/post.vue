@@ -2,7 +2,7 @@
   <div class="c-post">
     <div class="user-block">
       <user-block-small
-          avatar="https://picsum.photos/50/50"
+          avatar={{ feed.avatar }}
           username="John Doe"
       />
     </div>
@@ -19,7 +19,7 @@
         </li>
       </ul>
     </div>
-    <div class="date">15 may</div>
+    <div class="post__date">15 may</div>
   </div>
 </template>
 
@@ -34,6 +34,9 @@ export default {
     userBlockSmall,
     toggler,
     comment
+  },
+  props: {
+    feed: Object
   },
   data () {
     return {
@@ -82,7 +85,7 @@ export default {
   }
 }
 
-.date {
+.post__date {
   text-transform: uppercase;
   color: rgba(0, 0, 0, 0.4);
 }
