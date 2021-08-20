@@ -2,8 +2,8 @@
   <div class="c-post">
     <div class="user-block">
       <user-block-small
-          avatar=""
-          username="John Doe"
+          :avatar="avatar"
+          :username="username"
       />
     </div>
     <div class="repository-info">
@@ -19,7 +19,7 @@
         </li>
       </ul>
     </div>
-    <div class="post__date">15 may</div>
+    <div class="post__date">{{ date }}</div>
   </div>
 </template>
 
@@ -35,9 +35,20 @@ export default {
     toggler,
     comment
   },
-  // props: {
-  //   feed: Object
-  // },
+  props: {
+    avatar: {
+      type: String,
+      required: true
+    },
+    username: {
+      type: String,
+      required: true
+    },
+    date: {
+      type: String,
+      required: true
+    }
+  },
   data () {
     return {
       shown: false

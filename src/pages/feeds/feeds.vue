@@ -9,10 +9,10 @@
       </template>
       <template #content>
         <ul class="users">
-          <li class="users__item user" v-for="user in users" :key="user.id">
+          <li class="users__item user" v-for="item in items" :key="item.id">
             <user-block
-                :avatar="user.avatar"
-                :username="user.username"
+                :avatar="item.owner.avatar_url"
+                :username="item.owner.login"
             />
           </li>
         </ul>
@@ -22,17 +22,15 @@
   <div class="global-container feed-container">
     <ul class="feed">
       <li class="post" v-for="item in items" :key="item.id">
-        <post >
+        <post :avatar="item.owner.avatar_url" :username="item.owner.login" :date="item.created_at">
           <template #repository-info>
             <h2 class="post__title"> {{ item.full_name }} </h2>
             <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
-            <post-buttons quantity="156k" own-quantity="4" />
+            <post-buttons :stars="item.stargazers_count" :forks="item.forks" />
           </template>
         </post>
       </li>
     </ul>
-
-    <pre>{{ items }}</pre>
   </div>
 </template>
 
@@ -42,7 +40,6 @@ import { loggedAs } from '../../components/loggedAs'
 import { userBlock } from '../../components/userBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
-import users from './data.json'
 import * as api from '../../api'
 
 export default {
@@ -56,7 +53,6 @@ export default {
   },
   data () {
     return {
-      users,
       items: []
     }
   },
@@ -66,9 +62,7 @@ export default {
         avatar: '',
         username: '',
         title: '',
-        desc: '',
-        quantity: '',
-        ownQuantity: ''
+        desc: ''
       }
     }
   },

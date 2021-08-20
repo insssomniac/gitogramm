@@ -6,14 +6,14 @@
       </span>
       <span class="caption">Star</span>
     </button>
-    <div class="quantity">{{ quantity }}</div>
+    <div class="post-stars">{{ stars }}</div>
     <button class="post-button">
       <span class="icon-fork">
         <icon name="fork"/>
       </span>
       <span class="caption">Fork</span>
     </button>
-    <div class="own-quantity">{{ ownQuantity }}</div>
+    <div class="post-forks">{{ forks }}</div>
   </div>
 </template>
 
@@ -26,11 +26,11 @@ export default {
     icon
   },
   props: {
-    quantity: {
+    stars: {
       type: String,
       required: true
     },
-    ownQuantity: {
+    forks: {
       type: String,
       required: true
     }
@@ -41,10 +41,10 @@ export default {
 <style lang="scss" scoped>
 
 .c-post-buttons {
-  display: flex;
+  display: inline-flex;
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
-  width: 232px;
+  //width: 232px;
   overflow: hidden;
 }
 
@@ -56,6 +56,7 @@ export default {
   background: #FAFBFC;
   cursor: url("../../assets/a-pointer.png"), auto;
   color: #24292E;
+  border-right: 1px solid rgba(27, 31, 35, 0.15);
 }
 
 .icon-star, .icon-fork {
@@ -76,22 +77,20 @@ export default {
   height: 12px;
 }
 
-.quantity {
+.post-stars {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 55px;
-  border-left: 1px solid rgba(27, 31, 35, 0.15);
+  padding: 2px 12px;
   border-right: 1px solid rgba(27, 31, 35, 0.15);
   color: #24292E;
 }
 
-.own-quantity {
+.post-forks {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 33px;
-  border-left: 1px solid rgba(27, 31, 35, 0.15);
+  padding: 2px 12px;
   color: #24292E;
 }
 
