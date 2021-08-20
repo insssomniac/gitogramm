@@ -2,7 +2,7 @@
   <div class="c-post">
     <div class="user-block">
       <user-block-small
-          avatar={{ feed.avatar }}
+          avatar=""
           username="John Doe"
       />
     </div>
@@ -35,9 +35,9 @@ export default {
     toggler,
     comment
   },
-  props: {
-    feed: Object
-  },
+  // props: {
+  //   feed: Object
+  // },
   data () {
     return {
       shown: false

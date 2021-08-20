@@ -22,10 +22,10 @@
   <div class="global-container feed-container">
     <ul class="feed">
       <li class="post" v-for="item in items" :key="item.id">
-        <post v-bind="getFeedData(item)">
+        <post >
           <template #repository-info>
-            <h2 class="post__title">vv</h2>
-            <div class="post__desc"><b>JavaScript</b> framework for building interactive web applications ⚡</div>
+            <h2 class="post__title"> {{ item.full_name }} </h2>
+            <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
             <post-buttons quantity="156k" own-quantity="4" />
           </template>
         </post>
