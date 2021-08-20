@@ -26,7 +26,7 @@
           <template #repository-info>
             <h2 class="post__title"> {{ item.full_name }} </h2>
             <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
-            <post-buttons :stars="item.stargazers_count" :forks="item.forks" />
+            <post-buttons class="post__buttons" :stars="item.stargazers_count" :forks="item.forks" />
           </template>
         </post>
       </li>
@@ -115,8 +115,8 @@ export default {
   line-height: 1;
 }
 
-.post__desc {
-  margin-bottom: 33px;
+.post__buttons {
+  margin-top: 33px;
 }
 
 </style>
