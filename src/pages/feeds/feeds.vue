@@ -22,7 +22,7 @@
   <div class="global-container feed-container">
     <ul class="feed">
       <li class="post" v-for="item in items" :key="item.id">
-        <post :avatar="item.owner.avatar_url" :username="item.owner.login" :date="item.created_at">
+        <post :avatar="item.owner.avatar_url" :username="item.owner.login" :date="convertDate(item.created_at)">
           <template #repository-info>
             <h2 class="post__title"> {{ item.full_name }} </h2>
             <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
@@ -57,13 +57,11 @@ export default {
     }
   },
   methods: {
-    getFeedData (item) {
-      return {
-        avatar: '',
-        username: '',
-        title: '',
-        desc: ''
-      }
+    convertDate (date) {
+      const timestamp = Date.parse(date)
+      const options = { day: 'numeric', month: 'long', year: 'numeric' }
+
+      return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
     }
   },
   async created () {

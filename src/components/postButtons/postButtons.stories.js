@@ -4,10 +4,10 @@ export default {
   title: 'postButtons',
   component: { postButtons },
   argTypes: {
-    quantity: {
+    stars: {
       control: { type: 'text' }
     },
-    ownQuantity: {
+    forks: {
       control: { type: 'text' }
     }
   }
@@ -26,6 +26,6 @@ const template = (args) => ({
 export const Default = template.bind({})
 
 Default.args = {
-  quantity: '156k',
-  ownQuantity: '4'
+  stars: '156k',
+  forks: '4'
 }

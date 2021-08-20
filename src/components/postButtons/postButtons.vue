@@ -27,11 +27,11 @@ export default {
   },
   props: {
     stars: {
-      type: String,
+      type: Number,
       required: true
     },
     forks: {
-      type: String,
+      type: Number,
       required: true
     }
   }
@@ -44,7 +44,6 @@ export default {
   display: inline-flex;
   border: 1px solid rgba(27, 31, 35, 0.15);
   border-radius: 6px;
-  //width: 232px;
   overflow: hidden;
 }
 

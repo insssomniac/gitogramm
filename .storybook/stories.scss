@@ -34,6 +34,61 @@
   line-height: 1;
 }
 
-.post__desc {
-  margin-bottom: 33px;
+.post__buttons {
+  margin-top: 33px;
+}
+
+
+// postButtons.vue
+.c-post-buttons {
+  display: inline-flex;
+  border: 1px solid rgba(27, 31, 35, 0.15);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.post-button {
+  display: flex;
+  width: 72px;
+  align-items: center;
+  justify-content: center;
+  background: #FAFBFC;
+  cursor: url("../src/assets/a-pointer.png"), auto;
+  color: #24292E;
+  border-right: 1px solid rgba(27, 31, 35, 0.15);
+}
+
+.icon-star, .icon-fork {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #586069;
+  margin-right: 5px;
+}
+
+.icon-star {
+  width: 15px;
+  height: 15px;
+}
+
+.icon-fork {
+  width: 12px;
+  height: 12px;
+}
+
+.post-stars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  border-right: 1px solid rgba(27, 31, 35, 0.15);
+  color: #24292E;
+}
+
+.post-forks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 12px;
+  color: #24292E;
 }
