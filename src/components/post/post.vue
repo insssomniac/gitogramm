@@ -70,6 +70,7 @@ export default {
 
 .user-block {
   margin-bottom: 16px;
+  height: 44px;
 }
 
 .repository-info {

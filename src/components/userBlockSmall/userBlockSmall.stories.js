@@ -9,6 +9,10 @@ export default {
     },
     username: {
       control: { type: 'text' }
+    },
+    variant: {
+      options: ['card', 'none'],
+      control: { type: 'radio' }
     }
   }
 }

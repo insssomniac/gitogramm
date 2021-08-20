@@ -1,5 +1,5 @@
 <template>
-<div class="c-user-block-small">
+<div class="c-user-block-small" :class="variant">
   <div class="avatar">
     <img :src="avatar" class="img" alt="username avatar">
   </div>
@@ -18,6 +18,9 @@ export default {
     username: {
       type: String,
       required: true
+    },
+    variant: {
+      type: String
     }
   }
 }
@@ -40,6 +43,11 @@ export default {
   margin-right: 14px;
 }
 
+.card .avatar {
+  width: 33px;
+  height: 33px;
+}
+
 .img {
   width: 100%;
   height: 100%;
@@ -53,6 +61,10 @@ export default {
 .username {
   font-weight: bold;
   font-size: 18px;
+}
+
+.card .username {
+  font-size: 14px;
 }
 
 </style>
