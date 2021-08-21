@@ -6,6 +6,10 @@ export default {
   argTypes: {
     hoverText: {
       control: { type: 'text' }
+    },
+    variant: {
+      options: ['button--big', 'none'],
+      control: { type: 'radio' }
     }
   }
 }
@@ -21,3 +25,7 @@ const template = (args) => ({
 })
 
 export const Default = template.bind({})
+
+Default.args = {
+  variant: 'none'
+}

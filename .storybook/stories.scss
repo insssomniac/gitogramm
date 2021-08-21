@@ -1,6 +1,30 @@
+html, body {
+  scrollbar-color: #AFAFAF #fff;     /* «цвет ползунка» «цвет полосы скроллбара» */
+  scrollbar-width: none;  /* толщина */
+}
+
 .body {
   margin: 10px;
 }
+
+//scroll
+::-webkit-scrollbar {
+  width: 5px;
+  height: 2px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #AFAFAF;
+  border-radius: 10px;
+  box-shadow: inset 1px 1px 5px #f3faf7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #9E9E9E;
+}
+
+//elements
 
 .icons-default {
   width: 55px;
@@ -106,3 +130,4 @@
   left: 0;
   right: 0;
 }
+

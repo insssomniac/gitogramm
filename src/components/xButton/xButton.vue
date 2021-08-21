@@ -1,8 +1,8 @@
 <template>
 <button
     :class="[
-        'c-button', 'button--big', 'button--theme-green',
-        {'hover-text': withHoverText}
+        'c-button', 'button--theme-green',
+        {'hover-text': withHoverText}, variant
     ]"
     :data-hover-text="hoverText"
 >
@@ -17,6 +17,9 @@ export default {
   name: 'xButton',
   props: {
     hoverText: {
+      type: String
+    },
+    variant: {
       type: String
     }
   },
@@ -39,6 +42,11 @@ export default {
   cursor: url("../../assets/a-pointer.png"), auto;
 }
 
+.button--big {
+  width: 270px;
+  height: 44px;
+}
+
 .button--theme-green {
   background: #31AE54;
 }
@@ -46,6 +54,10 @@ export default {
 .button__text {
   color: #fff;
   font-weight: bold;
+}
+
+.button--big .button__text {
+  font-size: 16px;
 }
 
 </style>

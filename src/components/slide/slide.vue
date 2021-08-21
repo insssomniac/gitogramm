@@ -6,8 +6,25 @@
     </div>
     <user-block-small avatar="https://picsum.photos/50/50" username="React.reposit" variant="card" class="slide__userblock" />
   </div>
-  <div class="slide__body"></div>
+  <div class="slide__body">
+      <p>
+        <img src="https://picsum.photos/900/500" alt="article picture">
+      </p>
+      <p>
+        The easiest way to get .NET 6 Preview 4 is to install the maui-check dotnet tool from CLI and follow the instructions.
+      </p>
+      <p>
+        For running on Mac you'll currently use your favorite text editor and terminal to edit and run apps. We expect Visual Studio for Mac .NET 6 support to begin arriving mid-year.
+      </p>
+      <p>
+        In Preview 4 we enable push/pop navigation with NavigationPage. We added a concrete implementation of IWindow, and completed porting ContentPage from Xamarin.Forms
+      </p>
+      <p>
+        For running on Mac you'll currently use your favorite text editor and terminal to edit and run apps. We expect Visual Studio for Mac .NET 6 support to begin arriving mid-year.
+      </p>
+  </div>
   <div class="slide__footer">
+    <x-button class="slide__button" variant="button--big">Follow</x-button>
   </div>
 </div>
 </template>
@@ -15,12 +32,14 @@
 <script>
 import userBlockSmall from '../userBlockSmall/userBlockSmall'
 import xProgress from '../xProgress/xProgress'
+import xButton from '../xButton/xButton'
 
 export default {
   name: 'slide',
   components: {
     xProgress,
-    userBlockSmall
+    userBlockSmall,
+    xButton
   }
 }
 </script>
@@ -63,13 +82,29 @@ export default {
 }
 
 .slide__body {
-  overflow: hidden;
+  overflow: auto;
   flex-grow: 1;
+  padding: 0 5%;
+
+  // moz scrollbar
+  scrollbar-color: #AFAFAF #fff;
+  scrollbar-width: thin;
+}
+
+.slide__body p {
+  margin: 1em 0;
 }
 
 .slide__footer {
+  display: flex;
+  justify-content: center;
   height: 100px;
+  min-height: 100px;
   border-top: 1px solid #DEDEDE;;
+}
+
+.slide__button{
+  margin-top: 24px;
 }
 
 </style>
