@@ -65,8 +65,8 @@ export default {
       return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
     }
   },
-  beforeCreate () {
-    this.$store.dispatch('fetchTrendings')
+  async beforeCreate () {
+    await this.$store.dispatch('fetchTrendings')
     this.items = this.$store.state.trendings.data
     console.log(this.items)
   }
