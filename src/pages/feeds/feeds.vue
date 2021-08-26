@@ -3,7 +3,7 @@
     <topline>
       <template #headline>
         <div class="topline__container">
-          <h1 class="topline__title">Gitogram /</h1>
+          <logo variant="logo-black" />
           <logged-as avatar="https://picsum.photos/50/50" />
         </div>
       </template>
@@ -36,15 +36,16 @@
 
 <script>
 import { topline } from '../../components/topline'
+import { logo } from '../../components/logo'
 import { loggedAs } from '../../components/loggedAs'
 import { userBlock } from '../../components/userBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
-import * as api from '../../api'
 
 export default {
   name: 'feeds',
   components: {
+    logo,
     loggedAs,
     userBlock,
     topline,
@@ -64,13 +65,10 @@ export default {
       return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
     }
   },
-  async created () {
-    try {
-      const { data } = await api.trendings.getTrendings()
-      this.items = data.items
-    } catch (e) {
-      console.error(e)
-    }
+  beforeCreate () {
+    this.$store.dispatch('fetchTrendings')
+    this.items = this.$store.state.trendings.data
+    console.log(this.items)
   }
 }
 </script>
