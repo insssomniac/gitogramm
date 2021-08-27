@@ -1,5 +1,5 @@
 <template>
-<div :class="{ active }" class="c-xProgress">
+<div class="c-xProgress">
   <div ref="indicator" class="indicator"></div>
 </div>
 </template>
@@ -17,6 +17,10 @@ export default {
     }
   },
   mounted () {
+    setTimeout(
+      this.$refs.indicator.style.width = '100%',
+      1000
+    )
     this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
   },
   beforeUnmount () {
@@ -47,11 +51,6 @@ export default {
   position: relative;
   overflow: hidden;
 
-  &.active {
-    .indicator {
-      width: 100%;
-    }
-  }
 }
 
 </style>
