@@ -13,6 +13,7 @@
             <user-block
                 :avatar="item.owner.avatar_url"
                 :username="item.owner.login"
+                @storyPress="$router.push({name: 'stories', params: {initialSlide: item.id}})"
             />
           </li>
         </ul>
@@ -41,6 +42,7 @@ import { loggedAs } from '../../components/loggedAs'
 import { userBlock } from '../../components/userBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'feeds',
@@ -52,12 +54,21 @@ export default {
     post,
     postButtons
   },
+  emits: ['storyPress'],
   data () {
     return {
       items: []
     }
   },
+  computed: {
+    ...mapState({
+      trendings: state => state.trendings.trendings
+    })
+  },
   methods: {
+    ...mapActions({
+      fetchTrendings: 'trendings/fetchTrendings'
+    }),
     convertDate (date) {
       const timestamp = Date.parse(date)
       const options = { day: 'numeric', month: 'long', year: 'numeric' }
@@ -65,10 +76,9 @@ export default {
       return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
     }
   },
-  async beforeCreate () {
-    await this.$store.dispatch('fetchTrendings')
-    this.items = this.$store.state.trendings.data
-    console.log(this.items)
+  async created () {
+    await this.fetchTrendings()
+    this.items = this.trendings.data
   }
 }
 </script>

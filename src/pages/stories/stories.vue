@@ -2,16 +2,14 @@
 <div class="wrapper">
   <header class="header">
     <div class="global-container stories-container">
-      <button class="logo">
-        <logo variant="logo-white" />
-      </button>
+      <router-link class="logo" to="/"><logo variant="logo-white" /></router-link>
       <button class="btn-close">
         <icon name="close" />
       </button>
     </div>
   </header>
   <div class="content">
-    <stories-slider />
+    <stories-slider :initialSlide="Number($route.params.initialSlide)" />
   </div>
 </div>
 </template>
@@ -53,6 +51,10 @@ export default {
 .header {
   display: flex;
   margin-top: 48px;
+}
+
+.logo {
+  cursor: url("../../assets/a-pointer.png"), auto;
 }
 
 .btn-close {

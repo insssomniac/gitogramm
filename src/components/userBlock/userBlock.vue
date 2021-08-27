@@ -1,5 +1,5 @@
 <template>
-  <button class="c-user-block" @click="$emit('onPress')">
+  <button class="c-user-block" @click="$emit('storyPress')">
     <span class="avatar">
       <img :src="avatar" class="img" alt="username avatar">
     </span>
@@ -20,8 +20,7 @@ export default {
       required: true
     }
   },
-  emits: {
-  }
+  emits: ['storyPress']
 }
 </script>
 
@@ -44,6 +43,10 @@ export default {
   background: #FAFAFA;
   border: 2px solid #A6328D;
   margin-bottom: 8px;
+
+  &:hover {
+    border: 2px solid transparent;
+  }
 }
 
 .img {

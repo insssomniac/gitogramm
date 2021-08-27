@@ -2,12 +2,14 @@
 <div class="c-slide" :class="{ active }">
   <div class="slide__topline">
     <div v-if="active" class="slide__progress">
-      <x-progress class="x-progress"/>
+      <x-progress :active="active" class="x-progress" @onFinish="$emit('onProgressFinish')" />
     </div>
-    <user-block-small :avatar="userBlockAvatar" :username="username" variant="card" class="slide__userblock" />
+    <user-block-small :avatar="data.userBlockAvatar" :username="data.username" variant="card" class="slide__userblock" />
   </div>
   <div class="slide__body">
-    <div v-if="loading" class="loader"></div>
+    <div v-if="loading" class="loader">
+      <preloader/>
+    </div>
     <div class="info" v-else>
       <div v-if="data.content?.length" class="content" v-html="data.content"></div>
       <slidePlaceholder v-else />
@@ -17,12 +19,12 @@
     <x-button class="slide__button" variant="button--big">Follow</x-button>
   </div>
   <template v-if="active">
-    <button class="slide__arrow btn-prev">
+    <button v-if="buttonsShown.includes('prev')" class="slide__arrow btn-prev" @click="$emit('onPrevSlide')">
       <span class="icon">
         <icon name="arrow-left" />
       </span>
     </button>
-    <button class="slide__arrow btn-next">
+    <button v-if="buttonsShown.includes('next')" class="slide__arrow btn-next" @click="$emit('onNextSlide')">
       <span class="icon">
         <icon name="arrow-right" />
       </span>
@@ -37,6 +39,7 @@ import { xButton } from '../xButton'
 import { xProgress } from '../xProgress'
 import { userBlockSmall } from '../userBlockSmall'
 import { icon } from '../../icons'
+import { preloader } from '../preloader'
 
 export default {
   name: 'slide',
@@ -45,22 +48,24 @@ export default {
     userBlockSmall,
     xButton,
     slidePlaceholder,
-    icon
+    icon,
+    preloader
   },
+  emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish'],
   props: {
-    userBlockAvatar: {
-      type: String,
-      required: true
-    },
-    username: {
-      type: String,
-      required: true
-    },
     active: Boolean,
     loading: Boolean,
+    buttonsShown: {
+      type: Array,
+      default: () => ['next', 'prev'],
+      validator (value) {
+        return value.every(item => item === 'next' || item === 'prev')
+      }
+    },
     data: {
       type: Object,
-      required: true
+      required: true,
+      default: () => ({})
     }
   }
 }
@@ -72,13 +77,15 @@ export default {
   display: flex;
   flex-direction: column;
   position: relative;
-  height: 538px;
-  width: 302px;
+  height: 668px;
+  width: 376px;
   border-radius: 8px;
   background: #FFFFFF;
+  transform: scale(0.8);
 
   &.active {
-    transform: scale(1.1);
+    transform: scale(1);
+    z-index: 100;
   }
 }
 
@@ -109,7 +116,7 @@ export default {
 }
 
 .slide__body {
-  overflow: auto;
+  overflow-y: auto;
   padding: 2% 5%;
   height: 100%;
 
@@ -125,13 +132,13 @@ export default {
 .slide__footer {
   display: flex;
   justify-content: center;
-  height: 80px;
-  min-height: 80px;
+  height: 100px;
+  min-height: 100px;
   border-top: 1px solid #DEDEDE;;
 }
 
 .slide__button{
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .slide__arrow {
@@ -144,6 +151,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #fff;
 
   &:hover {
     .icon {
@@ -162,13 +170,13 @@ export default {
 
 .btn-prev {
   top: 50%;
-  left: 0;
+  left: -15%;
   transform: translate(0, -50%);
 }
 
 .btn-next {
   top: 50%;
-  right: 0;
+  right: -15%;
   transform: translate(0, -50%);
 }
 

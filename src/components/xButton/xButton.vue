@@ -43,8 +43,8 @@ export default {
 }
 
 .button--big {
-  width: 218px;
-  height: 36px;
+  width: 270px;
+  height: 44px;
 }
 
 .button--theme-green {
@@ -57,7 +57,7 @@ export default {
 }
 
 .button--big .button__text {
-  font-size: 13px;
+  font-size: 16px;
 }
 
 </style>
