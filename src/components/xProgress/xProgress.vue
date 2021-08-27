@@ -30,6 +30,16 @@ export default {
 
 <style lang="scss" scoped>
 
+.indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  background: #31AE54;
+  transition: 5s;
+}
+
 .c-xProgress {
   background: rgba(49, 174, 84, 0.3);
   height: 2px;
@@ -42,16 +52,6 @@ export default {
       width: 100%;
     }
   }
-}
-
-.indicator {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  background: #31AE54;
-  transition: 5s;
 }
 
 </style>

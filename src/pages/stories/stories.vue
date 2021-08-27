@@ -3,9 +3,9 @@
   <header class="header">
     <div class="global-container stories-container">
       <router-link class="logo" to="/"><logo variant="logo-white" /></router-link>
-      <button class="btn-close">
+      <router-link to="/" class="btn-close">
         <icon name="close" />
-      </button>
+      </router-link>
     </div>
   </header>
   <div class="content">

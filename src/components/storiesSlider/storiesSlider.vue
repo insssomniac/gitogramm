@@ -85,12 +85,8 @@ export default {
     moveSlide (ndx) {
       const distance = this.$refs.slide.clientWidth
 
-      if (ndx > this.slideNdx) {
-        this.sliderPosition -= distance
-      } else if (ndx < this.slideNdx) {
-        this.sliderPosition += distance
-      }
-      this.$refs.slider.style.transform = `translateX(${this.sliderPosition}px)`
+      this.sliderPosition = distance * ndx
+      this.$refs.slider.style.transform = `translateX(-${this.sliderPosition}px)`
       this.slideNdx = ndx
     },
     async handleSlide (ndx) {
