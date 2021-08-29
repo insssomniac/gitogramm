@@ -4,11 +4,16 @@ export default {
   title: 'slide',
   component: { slide },
   argTypes: {
-    userBlockAvatar: {
-      control: { type: 'text' }
+    active: {
+      options: [true, false],
+      control: { type: 'radio' }
     },
-    username: {
-      control: { type: 'text' }
+    loading: {
+      options: [true, false],
+      control: { type: 'radio' }
+    },
+    data: {
+      control: Object
     }
   }
 }
@@ -28,7 +33,10 @@ const template = (args) => ({
 export const Default = template.bind({})
 
 Default.args = {
-  userBlockAvatar: 'https://picsum.photos/50/50',
-  username: 'John Doe',
-  userBlockVariant: 'card'
+  active: false,
+  loading: false,
+  data: {
+    userBlockAvatar: 'https://picsum.photos/50/50',
+    username: 'John Doe'
+  }
 }

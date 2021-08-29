@@ -65,10 +65,7 @@ export default {
     },
     buttonsShown: {
       type: Array,
-      default: () => ['next', 'prev'],
-      validator (value) {
-        return value.every(item => item === 'next' || item === 'prev')
-      }
+      default: () => ['next', 'prev']
     },
     data: {
       type: Object,
