@@ -1,6 +1,6 @@
 <template>
 <div class="c-xProgress">
-  <div ref="indicator" class="indicator"></div>
+  <div ref="indicator" class="indicator" :class="{ active: isActive }"></div>
 </div>
 </template>
 
@@ -8,20 +8,33 @@
 export default {
   name: 'xProgress.vue',
   props: {
-    active: Boolean
+    isLastSlide: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['onFinish'],
+  data () {
+    return {
+      isActive: false
+    }
+  },
   methods: {
     emitOnFinish () {
       this.$emit('onFinish')
+    },
+    setActive () {
+      this.isActive = true
     }
   },
   mounted () {
     setTimeout(
-      this.$refs.indicator.style.width = '100%',
+      this.setActive,
       1000
     )
-    this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
+    if (!this.isLastSlide) {
+      this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
+    }
   },
   beforeUnmount () {
     this.$refs.indicator.removeEventListener(
@@ -39,9 +52,13 @@ export default {
   top: 0;
   bottom: 0;
   left: 0;
-  width: 0;
+  width: 1px;
   background: #31AE54;
   transition: 5s;
+
+  &.active {
+    width: 100%;
+  }
 }
 
 .c-xProgress {

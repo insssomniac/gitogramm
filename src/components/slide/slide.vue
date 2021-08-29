@@ -2,7 +2,11 @@
 <div class="c-slide" :class="{ active }">
   <div class="slide__topline">
     <div v-if="active" class="slide__progress">
-      <x-progress :active="active" class="x-progress" @onFinish="$emit('onProgressFinish')" />
+      <x-progress
+          class="x-progress"
+          @onFinish="$emit('onProgressFinish')"
+          :is-last-slide="isLastSlide"
+      />
     </div>
     <user-block-small :avatar="data.userBlockAvatar" :username="data.username" variant="card" class="slide__userblock" />
   </div>
@@ -55,6 +59,10 @@ export default {
   props: {
     active: Boolean,
     loading: Boolean,
+    isLastSlide: {
+      type: Boolean,
+      default: false
+    },
     buttonsShown: {
       type: Array,
       default: () => ['next', 'prev'],

@@ -7,7 +7,8 @@
             :data="getStoryData(trending)"
             :active="slideNdx === ndx"
             :loading="slideNdx === ndx && loading"
-            :buttons-shown = "activeBtns"
+            :buttons-shown="activeBtns"
+            :is-last-slide="lastSlide"
             @onNextSlide="handleSlide(ndx + 1)"
             @onPrevSlide="handleSlide(ndx - 1)"
             @onProgressFinish="handleSlide(ndx + 1)"
@@ -49,6 +50,9 @@ export default {
       if (this.slideNdx === 0) return ['next']
       if (this.slideNdx === this.trendings.length - 1) return ['prev']
       return ['next', 'prev']
+    },
+    lastSlide () {
+      return this.slideNdx === this.trendings.length - 1
     }
   },
   methods: {
