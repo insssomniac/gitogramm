@@ -22,8 +22,6 @@ export default {
 
 .c-preloader {
   display: flex;
-  width: 100%;
-  margin-top: 70%;
   align-items: center;
   justify-content: center;
 }

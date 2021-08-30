@@ -15,7 +15,7 @@
       <preloader/>
     </div>
     <div class="info" v-else>
-      <div v-if="data.content?.length" class="content" v-html="data.content"></div>
+      <div v-if="data.content" class="content" v-html="data.content"></div>
       <slidePlaceholder v-else />
     </div>
   </div>
@@ -163,6 +163,11 @@ export default {
       color: #31AE54;
     }
   }
+}
+
+.loader {
+  width: 100%;
+  margin-top: 70%;
 }
 
 .icon {
