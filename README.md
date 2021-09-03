@@ -5,6 +5,8 @@
 npm install
 or
 yarn install
+
+rename env.dist.js to env.js and insert your data
 ```
 
 ### Compiles and hot-reloads for development

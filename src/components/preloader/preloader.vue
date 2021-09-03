@@ -1,6 +1,6 @@
 <template>
 <div class="c-preloader">
-  <div class="icon">
+  <div class="icon" :class="variant">
     <icon name="preloader"></icon>
   </div>
 </div>
@@ -14,6 +14,11 @@ export default {
   name: 'preloader',
   components: {
     icon
+  },
+  props: {
+    variant: {
+      type: String
+    }
   }
 }
 </script>
@@ -30,7 +35,15 @@ export default {
   width: 40px;
   height: 40px;
   animation: preloader-rotate 2s infinite linear;
+
+}
+
+.preloader--green {
   color: #31AE54;
+}
+
+.preloader--white {
+  color: #fff;
 }
 
 @keyframes preloader-rotate {

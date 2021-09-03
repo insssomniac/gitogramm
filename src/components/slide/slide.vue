@@ -20,7 +20,15 @@
     </div>
   </div>
   <div class="slide__footer">
-    <x-button class="slide__button" variant="button--big">Follow</x-button>
+    <x-button
+        class="slide__button"
+        variant="button--big"
+        :theme="data.following.status ? 'button--theme-grey' : 'button--theme-green'"
+        :loading="data.following.loading"
+        @click="$emit(data.following.status ? 'onUnfollow' : 'onFollow', data.id)"
+    >
+      {{ data.following.status ? 'Unfollow' : 'Follow' }}
+    </x-button>
   </div>
   <template v-if="active">
     <button v-if="buttonsShown.includes('prev')" class="slide__arrow btn-prev" @click="$emit('onPrevSlide')">
@@ -55,7 +63,7 @@ export default {
     icon,
     preloader
   },
-  emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish'],
+  emits: ['onPrevSlide', 'onNextSlide', 'onProgressFinish', 'onFollow', 'onUnfollow'],
   props: {
     active: Boolean,
     loading: Boolean,
@@ -69,7 +77,6 @@ export default {
     },
     data: {
       type: Object,
-      required: true,
       default: () => ({})
     }
   }

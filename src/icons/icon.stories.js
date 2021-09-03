@@ -7,7 +7,7 @@ export default {
     name: {
       control: {
         type: 'select',
-        options: ['exit', 'fork', 'home', 'star', 'triangle']
+        options: ['exit', 'fork', 'home', 'star', 'triangle', 'git']
       }
     }
   }

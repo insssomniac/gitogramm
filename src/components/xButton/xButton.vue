@@ -1,18 +1,24 @@
 <template>
 <button
     :class="[
-        'c-button', 'button--theme-green',
-        {'hover-text': withHoverText}, variant
+        'c-button',
+        {'hover-text': withHoverText}, variant, theme
     ]"
-    :data-hover-text="hoverText"
+    :data-hover-text="hoverText" :disabled="disabled"
 >
   <span class="button__text">
-    <slot></slot>
+    <span v-if="loading" class="loader">
+      <preloader variant="preloader--white"/>
+    </span>
+    <slot v-else></slot>
   </span>
 </button>
 </template>
 
 <script>
+
+import { preloader } from '../preloader'
+
 export default {
   name: 'xButton',
   props: {
@@ -21,7 +27,15 @@ export default {
     },
     variant: {
       type: String
-    }
+    },
+    theme: {
+      type: String
+    },
+    loading: Boolean,
+    disabled: Boolean
+  },
+  components: {
+    preloader
   },
   computed: {
     withHoverText () {
@@ -47,13 +61,32 @@ export default {
   height: 44px;
 }
 
+.button--login {
+  width: 252px;
+  height: 44px;
+}
+
 .button--theme-green {
   background: #31AE54;
+}
+
+.button--theme-grey {
+  background: #9E9E9E;
 }
 
 .button__text {
   color: #fff;
   font-weight: bold;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .button--big .button__text {

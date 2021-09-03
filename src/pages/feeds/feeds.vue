@@ -43,6 +43,7 @@ import { userBlock } from '../../components/userBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
 import { mapState, mapActions } from 'vuex'
+import * as api from '../../api'
 
 export default {
   name: 'feeds',
@@ -74,6 +75,17 @@ export default {
       const options = { day: 'numeric', month: 'long', year: 'numeric' }
 
       return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
+    },
+    async getUser () {
+      const token = sessionStorage.token
+      if (token) {
+        try {
+          const response = api.client.getUser({ token })
+          console.log(response)
+        } catch (e) {
+          console.log(e)
+        }
+      }
     }
   },
   async created () {
