@@ -39,7 +39,8 @@ export default {
       const githubAuthUrl = 'https://github.com/login/oauth/authorize'
       const params = new URLSearchParams()
       params.append('client_id', env.clientId)
-      params.append('scope', 'repo:status read:user')
+      params.append('scope', 'repo user admin:repo_hook gist notifications write:discussion read:discussion' +
+          'write:packages read:packages workflow')
 
       window.location.href = `${githubAuthUrl}?${params}`
     }
@@ -59,14 +60,13 @@ export default {
             clientSecret: env.clientSecret
           })
         })
-
         const { token } = await response.json()
 
         sessionStorage.setItem('token', token)
-        await this.$router.replace({ name: 'feeds' })
       } catch (e) {
         console.log(e)
       }
+      document.location.reload()
     }
   }
 }

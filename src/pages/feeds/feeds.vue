@@ -9,7 +9,7 @@
       </template>
       <template #content>
         <ul class="users">
-          <li class="users__item user" v-for="item in items" :key="item.id">
+          <li class="users__item user" v-for="item in trendingsArr" :key="item.id">
             <user-block
                 :avatar="item.owner.avatar_url"
                 :username="item.owner.login"
@@ -22,7 +22,7 @@
   </div>
   <div class="global-container feed-container">
     <ul class="feed">
-      <li class="post" v-for="item in items" :key="item.id">
+      <li class="post" v-for="item in starredArr" :key="item.id">
         <post :avatar="item.owner.avatar_url" :username="item.owner.login" :date="convertDate(item.created_at)">
           <template #repository-info>
             <h2 class="post__title"> {{ item.full_name }} </h2>
@@ -58,17 +58,20 @@ export default {
   emits: ['storyPress'],
   data () {
     return {
-      items: []
+      trendingsArr: [],
+      starredArr: []
     }
   },
   computed: {
     ...mapState({
-      trendings: state => state.trendings.trendings
+      trendings: state => state.trendings.trendings,
+      starred: state => state.trendings.starred
     })
   },
   methods: {
     ...mapActions({
-      fetchTrendings: 'trendings/fetchTrendings'
+      fetchTrendings: 'trendings/fetchTrendings',
+      fetchStarred: 'trendings/fetchStarred'
     }),
     convertDate (date) {
       const timestamp = Date.parse(date)
@@ -80,7 +83,7 @@ export default {
       const token = sessionStorage.token
       if (token) {
         try {
-          const response = api.client.getUser({ token })
+          const response = api.client.getUser()
           console.log(response)
         } catch (e) {
           console.log(e)
@@ -90,7 +93,9 @@ export default {
   },
   async created () {
     await this.fetchTrendings()
-    this.items = this.trendings.data
+    await this.fetchStarred()
+    this.trendingsArr = this.trendings.data
+    this.starredArr = this.starred.data
   }
 }
 </script>

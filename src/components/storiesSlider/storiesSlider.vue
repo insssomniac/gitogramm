@@ -13,6 +13,7 @@
             @onPrevSlide="handleSlide(ndx - 1)"
             @onProgressFinish="handleSlide(ndx + 1)"
             @onFollow="starRepo"
+            @onUnfollow="unstarRepo"
         />
       </li>
     </ul>
@@ -60,7 +61,9 @@ export default {
     ...mapActions({
       fetchTrendings: 'trendings/fetchTrendings',
       fetchReadme: 'trendings/fetchReadme',
-      starRepo: 'trendings/starRepo'
+      starRepo: 'trendings/starRepo',
+      unstarRepo: 'trendings/unstarRepo',
+      checkStatus: 'trendings/checkStatus'
     }),
     async fetchReadmeActiveSlide () {
       const { id, owner, name } = this.trendings[this.slideNdx]
