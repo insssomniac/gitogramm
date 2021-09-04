@@ -54,7 +54,7 @@ export default {
   left: 0;
   width: 1px;
   background: #31AE54;
-  transition: 5s;
+  transition: 8s;
 
   &.active {
     width: 100%;
