@@ -94,7 +94,6 @@ export default {
       if (token) {
         try {
           const response = await api.client.getUser()
-          console.log(response.data.avatar_url)
           this.loggedUser = response.data
         } catch (e) {
           console.log(e)

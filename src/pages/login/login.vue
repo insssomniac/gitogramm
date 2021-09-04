@@ -65,8 +65,9 @@ export default {
         sessionStorage.setItem('token', token)
       } catch (e) {
         console.log(e)
+      } finally {
+        location.replace('/')
       }
-      document.location.reload()
     }
   }
 }

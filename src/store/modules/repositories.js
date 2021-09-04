@@ -181,7 +181,6 @@ export default {
 
       try {
         const status = await api.starred.checkStatus({ owner: owner.login, repo })
-
         commit('SET_FOLLOWING', {
           id,
           data: { status: status }
@@ -225,7 +224,7 @@ export default {
           id,
           loading: false
         })
-        console.log('erro: ' + e)
+        console.log('fetchIssues error: ' + e)
       }
     }
   }

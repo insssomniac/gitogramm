@@ -69,12 +69,17 @@ export default {
       const { id, owner, name } = this.trendings[this.slideNdx]
       await this.fetchReadme({ id, owner: owner.login, repo: name })
     },
+    async checkFollowing () {
+      const { id } = this.trendings[this.slideNdx]
+      await this.checkStatus({ id })
+    },
     async loadReadme () {
       this.loading = true
       this.buttonsShown = false
 
       try {
         await this.fetchReadmeActiveSlide()
+        await this.checkFollowing()
       } catch (e) {
         console.log(e)
         throw e
@@ -105,12 +110,13 @@ export default {
     }
   },
   async mounted () {
+    await this.fetchTrendings()
     if (this.initialSlide) {
       const ndx = this.trendings.findIndex(item => item.id === this.initialSlide)
       await this.handleSlide(ndx)
+    } else {
+      await this.loadReadme()
     }
-    await this.fetchTrendings()
-    await this.loadReadme()
   }
 }
 </script>
