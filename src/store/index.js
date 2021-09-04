@@ -1,8 +1,8 @@
 import { createStore } from 'vuex'
-import trendings from './modules/trendings'
+import repositories from './modules/repositories'
 
 export default createStore({
   modules: {
-    trendings
+    repositories
   }
 })

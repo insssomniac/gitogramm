@@ -6,7 +6,7 @@
     <div class="avatar">
       <img :src="avatar" alt="user avatar" class="avatar__pic">
     </div>
-    <button class="icon">
+    <button @click="$emit('onLogout')" class="icon">
       <icon name="exit"/>
     </button>
   </div>

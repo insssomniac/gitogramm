@@ -1,7 +1,7 @@
 <template>
 <div class="c-comment">
   <span class="username">{{ username }}</span>
-  {{ text }}
+  <a class="link" :href="url">{{ text }}</a>
 </div>
 </template>
 
@@ -16,6 +16,10 @@ export default {
     text: {
       type: String,
       required: true
+    },
+    url: {
+      type: String,
+      required: true
     }
   }
 }
@@ -25,6 +29,11 @@ export default {
 
 .username{
   font-weight: bold;
+  margin-right: 1em;
+}
+
+.link {
+  color: inherit;
 }
 
 </style>

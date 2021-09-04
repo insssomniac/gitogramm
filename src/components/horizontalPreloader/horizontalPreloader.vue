@@ -5,7 +5,7 @@
 
 <script>
 export default {
-  name: 'issuesPreloader'
+  name: 'horizontalPreloader'
 }
 </script>
 
@@ -14,9 +14,9 @@ export default {
 .c-horizontal-preloader {
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #FFFFFF, #EAEAEA, #FFFFFF, #EAEAEA);
-  background-size: 400%;
-  animation: background 3s infinite running;
+  background: linear-gradient(to right, #FFFFFF, #D9D9D9, #FFFFFF, #D9D9D9, #FFFFFF, #D9D9D9, #FFFFFF, #D9D9D9);
+  background-size: 800%;
+  animation: background 4s infinite running;
 }
 
 @keyframes background {

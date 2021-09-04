@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     ...mapState({
-      trendings: state => state.trendings.trendings.data
+      trendings: state => state.repositories.trendings.data
     }),
     activeBtns () {
       if (this.buttonsShown === false) return []
@@ -59,11 +59,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchTrendings: 'trendings/fetchTrendings',
-      fetchReadme: 'trendings/fetchReadme',
-      starRepo: 'trendings/starRepo',
-      unstarRepo: 'trendings/unstarRepo',
-      checkStatus: 'trendings/checkStatus'
+      fetchTrendings: 'repositories/fetchTrendings',
+      fetchReadme: 'repositories/fetchReadme',
+      starRepo: 'repositories/starRepo',
+      unstarRepo: 'repositories/unstarRepo',
+      checkStatus: 'repositories/checkStatus'
     }),
     async fetchReadmeActiveSlide () {
       const { id, owner, name } = this.trendings[this.slideNdx]

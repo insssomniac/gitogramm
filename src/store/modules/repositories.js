@@ -8,11 +8,20 @@ export default {
     },
     starred: {
       data: []
+    },
+    issues: {
+      data: []
     }
   },
   getters: {
-    getRepoById: (state) => (id) => {
-      return state.trendings.data.find(item => item.id === id)
+    getRepoById: (state) => (id, from = 'trendings') => {
+      if (from === 'trendings') {
+        return state.trendings.data.find(item => item.id === id)
+      }
+      if (from === 'starred') {
+        return state.starred.data.find(item => item.id === id)
+      }
+      return {}
     }
   },
   mutations: {
@@ -46,6 +55,17 @@ export default {
           }
         }
         return repo
+      })
+    },
+    SET_ISSUES_DATA: (state, payload) => {
+      state.starred.data = state.starred.data.map(item => {
+        if (payload.id === item.id) {
+          item.issues = {
+            loading: payload.loading,
+            data: payload.data
+          }
+        }
+        return item
       })
     }
   },
@@ -148,7 +168,7 @@ export default {
         })
       }
     },
-    async checkStatus ({ commit, getters }, id) {
+    async checkStatus ({ commit, getters }, { id }) {
       const { name: repo, owner } = getters.getRepoById(id)
 
       commit('SET_FOLLOWING', {
@@ -180,6 +200,32 @@ export default {
             loading: false
           }
         })
+      }
+    },
+    async fetchIssues ({ commit, getters }, { id }) {
+      const currentRepo = getters.getRepoById(id, 'starred')
+      const { name: repo, owner } = currentRepo
+
+      if (currentRepo.issues !== undefined) return
+
+      commit('SET_ISSUES_DATA', {
+        id,
+        loading: true
+      })
+
+      try {
+        const response = await api.issues.getIssues({ owner: owner.login, repo })
+        commit('SET_ISSUES_DATA', {
+          id,
+          loading: false,
+          data: response.data
+        })
+      } catch (e) {
+        commit('SET_ISSUES_DATA', {
+          id,
+          loading: false
+        })
+        console.log('erro: ' + e)
       }
     }
   }

@@ -13,11 +13,28 @@
       <toggler @onToggle="toggle" />
     </div>
     <div class="comments" v-if="shown">
-      <ul class="comments__list">
-        <li class="comments__item" v-for="n in 5" :key="n">
-          <comment username="joshua_l" text="Enable performance measuring in production, at the user's request"/>
-        </li>
-      </ul>
+      <div class="preloader" v-if="repoIssues.loading">
+        <div class="preloader__line-first">
+          <horizontal-preloader/>
+        </div>
+        <div class="preloader__line-second">
+          <horizontal-preloader/>
+        </div>
+        <div class="preloader__line-third">
+          <horizontal-preloader/>
+        </div>
+      </div>
+      <div v-else>
+        <ul class="comments__list"  v-if="repoIssues.data.length">
+          <li class="comments__item" v-for="issue in repoIssues.data" :key="issue.id">
+            <comment :username="issue.user.login" :text="issue.title" :url="issue.html_url"/>
+          </li>
+        </ul>
+        <div v-else>
+          No issues for this repository yet...
+        </div>
+      </div>
+
     </div>
     <div class="post__date">{{ date }}</div>
   </div>
@@ -27,13 +44,15 @@
 import { userBlockSmall } from '../../components/userBlockSmall'
 import { toggler } from '../toggler'
 import { comment } from '../comment'
+import { horizontalPreloader } from '../horizontalPreloader'
 
 export default {
   name: 'post',
   components: {
     userBlockSmall,
     toggler,
-    comment
+    comment,
+    horizontalPreloader
   },
   props: {
     avatar: {
@@ -47,6 +66,10 @@ export default {
     date: {
       type: String,
       required: true
+    },
+    repoIssues: {
+      type: Object,
+      default: () => ({})
     }
   },
   data () {
@@ -57,6 +80,7 @@ export default {
   methods: {
     toggle (isOpened) {
       this.shown = isOpened
+      this.$emit('toggleIssues')
     }
   }
 }
@@ -94,6 +118,26 @@ export default {
 
   &:last-child {
     margin-bottom: 0;
+  }
+}
+
+.preloader {
+  width: 504px;
+
+  &__line-first, &__line-second, &__line-third {
+    height: 22px;
+    border-radius: 4px;
+  }
+  &__line-first {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  &__line-second {
+    width: 60%;
+    margin-bottom: 5px;
+  }
+  &__line-third {
+    width: 40%;
   }
 }
 

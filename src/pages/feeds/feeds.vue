@@ -4,7 +4,9 @@
       <template #headline>
         <div class="topline__container">
           <logo variant="logo-black" />
-          <logged-as avatar="https://picsum.photos/50/50" />
+          <logged-as
+              @onLogout="logOut"
+              :avatar="loggedUser.avatar_url" />
         </div>
       </template>
       <template #content>
@@ -23,7 +25,13 @@
   <div class="global-container feed-container">
     <ul class="feed">
       <li class="post" v-for="item in starredArr" :key="item.id">
-        <post :avatar="item.owner.avatar_url" :username="item.owner.login" :date="convertDate(item.created_at)">
+        <post
+            :avatar="item.owner.avatar_url"
+            :username="item.owner.login"
+            :date="convertDate(item.created_at)"
+            :repoIssues="item.issues"
+            @toggleIssues="getIssues(item.id)"
+        >
           <template #repository-info>
             <h2 class="post__title"> {{ item.full_name }} </h2>
             <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
@@ -55,23 +63,25 @@ export default {
     post,
     postButtons
   },
-  emits: ['storyPress'],
+  emits: ['storyPress', 'toggleIssues', 'onLogout'],
   data () {
     return {
       trendingsArr: [],
-      starredArr: []
+      starredArr: [],
+      loggedUser: {}
     }
   },
   computed: {
     ...mapState({
-      trendings: state => state.trendings.trendings,
-      starred: state => state.trendings.starred
+      trendings: state => state.repositories.trendings,
+      starred: state => state.repositories.starred
     })
   },
   methods: {
     ...mapActions({
-      fetchTrendings: 'trendings/fetchTrendings',
-      fetchStarred: 'trendings/fetchStarred'
+      fetchTrendings: 'repositories/fetchTrendings',
+      fetchStarred: 'repositories/fetchStarred',
+      fetchIssues: 'repositories/fetchIssues'
     }),
     convertDate (date) {
       const timestamp = Date.parse(date)
@@ -83,17 +93,26 @@ export default {
       const token = sessionStorage.token
       if (token) {
         try {
-          const response = api.client.getUser()
-          console.log(response)
+          const response = await api.client.getUser()
+          console.log(response.data.avatar_url)
+          this.loggedUser = response.data
         } catch (e) {
           console.log(e)
         }
       }
+    },
+    async getIssues (id) {
+      await this.fetchIssues({ id })
+    },
+    logOut () {
+      sessionStorage.removeItem('token')
+      document.location.reload()
     }
   },
   async created () {
     await this.fetchTrendings()
     await this.fetchStarred()
+    await this.getUser()
     this.trendingsArr = this.trendings.data
     this.starredArr = this.starred.data
   }
