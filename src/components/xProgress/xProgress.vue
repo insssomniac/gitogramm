@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import useXprogress from '../composables/useXprogress'
+
 export default {
   name: 'xProgress.vue',
   props: {
@@ -14,24 +16,21 @@ export default {
     }
   },
   emits: ['onFinish'],
-  data () {
-    return {
-      isActive: false
-    }
-  },
-  methods: {
-    emitOnFinish () {
-      this.$emit('onFinish')
-    },
-    setActive () {
-      this.isActive = true
-    }
+  setup (props, { emit }) {
+    const {
+      isActive,
+      emitOnFinish,
+      setActive,
+      indicator
+    } = useXprogress(props, emit)
+
+    return { isActive, emitOnFinish, setActive, indicator }
   },
   mounted () {
-    setTimeout(
-      this.setActive,
-      1000
-    )
+    // setTimeout(
+    //   this.setActive,
+    //   1000
+    // )
     if (!this.isLastSlide) {
       this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
     }

@@ -9,22 +9,20 @@
 
 <script>
 import { icon } from '../../icons'
+import useToggler from '../composables/useToggler'
 
 export default {
   name: 'toggler',
   components: {
     icon
   },
-  data () {
-    return {
-      isOpened: false
-    }
-  },
-  methods: {
-    toggle () {
-      this.isOpened = !this.isOpened
-      this.$emit('onToggle', this.isOpened)
-    }
+  setup (props, { emit }) {
+    const {
+      isOpened,
+      toggle
+    } = useToggler(emit)
+
+    return { isOpened, toggle }
   }
 }
 </script>

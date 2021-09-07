@@ -45,6 +45,7 @@ import { userBlockSmall } from '../../components/userBlockSmall'
 import { toggler } from '../toggler'
 import { comment } from '../comment'
 import { horizontalPreloader } from '../horizontalPreloader'
+import useShowHide from '../composables/useShowHide'
 
 export default {
   name: 'post',
@@ -72,16 +73,12 @@ export default {
       default: () => ({})
     }
   },
-  data () {
-    return {
-      shown: false
-    }
-  },
-  methods: {
-    toggle (isOpened) {
-      this.shown = isOpened
-      this.$emit('toggleIssues')
-    }
+  setup (props, { emit }) {
+    const {
+      shown,
+      toggle
+    } = useShowHide(emit)
+    return { shown, toggle }
   }
 }
 </script>
