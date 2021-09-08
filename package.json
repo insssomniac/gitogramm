@@ -8,9 +8,9 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint",
+    "build-storybook": "build-storybook",
     "gh-pages-deploy": "node scripts/gh-pages-deploy.js",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
     "test": "jest"
   },
   "dependencies": {
@@ -54,7 +54,7 @@
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
-    "vue-jest": "^3.0.7",
+    "vue-jest": "^5.0.0-0",
     "vue-loader": "^16.5.0"
   }
 }
