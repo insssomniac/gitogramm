@@ -7,6 +7,18 @@ export const getUser = () => {
   })
 }
 
+export const getUserRepos = (username) => {
+  return makeRequest({
+    url: `/users/${username}/repos`
+  })
+}
+
+export const getUserFollowing = () => {
+  return makeRequest({
+    url: '/user/following'
+  })
+}
+
 export const getToken = (code) => {
   return makeRequest({
     url: 'https://webdev-api.loftschool.com/github',

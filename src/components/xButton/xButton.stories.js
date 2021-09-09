@@ -8,7 +8,7 @@ export default {
       control: { type: 'text' }
     },
     variant: {
-      options: ['button--big', 'none'],
+      options: ['button--big', 'button--sm', 'none'],
       control: { type: 'radio' }
     },
     theme: {

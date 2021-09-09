@@ -1,8 +1,14 @@
 import { feeds } from '../pages/feeds'
 import { stories } from '../pages/stories'
 import { login } from '../pages/login'
+import { profile } from '../pages/profile'
 
 export default [
+  {
+    path: '/auth',
+    component: login,
+    name: 'auth'
+  },
   {
     path: '/',
     component: feeds,
@@ -15,8 +21,8 @@ export default [
     props: true
   },
   {
-    path: '/auth',
-    component: login,
-    name: 'auth'
+    path: '/profile',
+    component: profile,
+    name: 'profile'
   }
 ]

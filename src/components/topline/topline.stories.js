@@ -1,6 +1,6 @@
 import topline from './topline.vue'
 import loggedAs from '../loggedAs/loggedAs'
-import userBlock from '../userBlock/userBlock'
+import userBlock from '../storyBlock/storyBlock'
 
 export default {
   title: 'topline',

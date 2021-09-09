@@ -1,29 +1,25 @@
-import userBlockSmall from './userBlockSmall.vue'
+import userBlock from './storyBlock.vue'
 
 export default {
-  title: 'userBlockSmall',
-  component: { userBlockSmall },
+  title: 'userBlock',
+  component: { userBlock },
   argTypes: {
     avatar: {
       control: { type: 'text' }
     },
     username: {
       control: { type: 'text' }
-    },
-    variant: {
-      options: ['card', 'none'],
-      control: { type: 'radio' }
     }
   }
 }
 
 const template = (args) => ({
-  components: { userBlockSmall },
+  components: { userBlock },
   data () {
     return { args }
   },
   template: `
-    <user-block-small v-bind="args" />
+    <user-block v-bind="args" />
   `
 })
 

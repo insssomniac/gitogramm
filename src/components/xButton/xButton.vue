@@ -4,7 +4,7 @@
         'c-button',
         {'hover-text': withHoverText}, variant, theme
     ]"
-    :data-hover-text="hoverText" :disabled="disabled"
+    :disabled="disabled"
 >
   <span class="button__text">
     <span v-if="loading" class="loader">
@@ -54,6 +54,15 @@ export default {
   border-radius: 5px;
   padding: 10px 20px;
   cursor: url("../../assets/a-pointer.png"), auto;
+}
+
+.button--sm {
+  width: 115px;
+  height: 42px;
+}
+
+.button--sm .button__text {
+  font-size: 16px;
 }
 
 .button--big {

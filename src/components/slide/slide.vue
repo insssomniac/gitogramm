@@ -8,7 +8,11 @@
           :is-last-slide="isLastSlide"
       />
     </div>
-    <user-block-small :avatar="data.userBlockAvatar" :username="data.username" variant="card" class="slide__userblock" />
+    <user-block
+        :avatar="data.userBlockAvatar"
+        :username="data.username"
+        variant="card"
+        class="slide__userblock" />
   </div>
   <div class="slide__body">
     <div v-if="loading" class="loader">
@@ -49,7 +53,7 @@
 import { slidePlaceholder } from '../slidePlaceholder'
 import { xButton } from '../xButton'
 import { xProgress } from '../xProgress'
-import { userBlockSmall } from '../userBlockSmall'
+import { userBlock } from '../userBlock'
 import { icon } from '../../icons'
 import { preloader } from '../preloader'
 
@@ -57,7 +61,7 @@ export default {
   name: 'slide',
   components: {
     xProgress,
-    userBlockSmall,
+    userBlock,
     xButton,
     slidePlaceholder,
     icon,

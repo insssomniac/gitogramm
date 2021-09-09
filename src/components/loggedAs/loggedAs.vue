@@ -1,12 +1,12 @@
 <template>
   <div class="c-logged-as">
-    <button class="icon">
+    <button class="icon" @click="$router.push({name: 'feeds'})">
       <icon name="home"/>
     </button>
-    <div class="avatar">
+    <div class="avatar" @click="$router.push({name: 'profile'})">
       <img :src="avatar" alt="user avatar" class="avatar__pic">
     </div>
-    <button @click="$emit('onLogout')" class="icon">
+    <button @click="logOut" class="icon">
       <icon name="exit"/>
     </button>
   </div>
@@ -24,6 +24,12 @@ export default {
     avatar: {
       type: String,
       required: true
+    }
+  },
+  methods: {
+    logOut () {
+      sessionStorage.removeItem('token')
+      document.location.reload()
     }
   }
 }
@@ -57,6 +63,7 @@ export default {
   width: 37px;
   height: 37px;
   margin-right: 25px;
+  cursor: url("../../assets/a-pointer.png"), auto;
 }
 
 .avatar__pic {

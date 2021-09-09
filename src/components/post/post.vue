@@ -1,7 +1,7 @@
 <template>
   <div class="c-post">
     <div class="user-block">
-      <user-block-small
+      <user-block
           :avatar="avatar"
           :username="username"
       />
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { userBlockSmall } from '../../components/userBlockSmall'
+import { userBlock } from '../../components/userBlock'
 import { toggler } from '../toggler'
 import { comment } from '../comment'
 import { horizontalPreloader } from '../horizontalPreloader'
@@ -50,7 +50,7 @@ import useShowHide from '../composables/useShowHide'
 export default {
   name: 'post',
   components: {
-    userBlockSmall,
+    userBlock,
     toggler,
     comment,
     horizontalPreloader

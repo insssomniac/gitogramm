@@ -5,14 +5,13 @@
         <div class="topline__container">
           <logo variant="logo-black" />
           <logged-as
-              @onLogout="logOut"
               :avatar="loggedUser.avatar_url" />
         </div>
       </template>
       <template #content>
         <ul class="users">
           <li class="users__item user" v-for="item in trendingsArr" :key="item.id">
-            <user-block
+            <story-block
                 :avatar="item.owner.avatar_url"
                 :username="item.owner.login"
                 @storyPress="$router.push({name: 'stories', params: {initialSlide: item.id}})"
@@ -33,7 +32,7 @@
             @toggleIssues="getIssues(item.id)"
         >
           <template #repository-info>
-            <h2 class="post__title"> {{ item.full_name }} </h2>
+            <a :href="item.html_url" class="post__title"> {{ item.full_name }} </a>
             <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
             <post-buttons class="post__buttons" :stars="item.stargazers_count" :forks="item.forks" />
           </template>
@@ -47,23 +46,22 @@
 import { topline } from '../../components/topline'
 import { logo } from '../../components/logo'
 import { loggedAs } from '../../components/loggedAs'
-import { userBlock } from '../../components/userBlock'
+import { storyBlock } from '../../components/storyBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
 import { mapState, mapActions } from 'vuex'
-import * as api from '../../api'
 
 export default {
   name: 'feeds',
   components: {
     logo,
     loggedAs,
-    userBlock,
+    storyBlock,
     topline,
     post,
     postButtons
   },
-  emits: ['storyPress', 'toggleIssues', 'onLogout'],
+  emits: ['storyPress', 'toggleIssues'],
   data () {
     return {
       trendingsArr: [],
@@ -74,14 +72,16 @@ export default {
   computed: {
     ...mapState({
       trendings: state => state.repositories.trendings,
-      starred: state => state.repositories.starred
+      starred: state => state.repositories.starred,
+      user: state => state.user.user
     })
   },
   methods: {
     ...mapActions({
       fetchTrendings: 'repositories/fetchTrendings',
       fetchStarred: 'repositories/fetchStarred',
-      fetchIssues: 'repositories/fetchIssues'
+      fetchIssues: 'repositories/fetchIssues',
+      getUser: 'user/getUser'
     }),
     convertDate (date) {
       const timestamp = Date.parse(date)
@@ -89,23 +89,8 @@ export default {
 
       return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
     },
-    async getUser () {
-      const token = sessionStorage.token
-      if (token) {
-        try {
-          const response = await api.client.getUser()
-          this.loggedUser = response.data
-        } catch (e) {
-          console.log(e)
-        }
-      }
-    },
     async getIssues (id) {
       await this.fetchIssues({ id })
-    },
-    logOut () {
-      sessionStorage.removeItem('token')
-      document.location.reload()
     }
   },
   async created () {
@@ -114,6 +99,7 @@ export default {
     await this.getUser()
     this.trendingsArr = this.trendings.data
     this.starredArr = this.starred.data
+    this.loggedUser = this.user.data
   }
 }
 </script>
@@ -151,9 +137,14 @@ export default {
 }
 
 .post__title {
+  text-decoration: none;
+  display: block;
+  color: #000;
+  font-weight: bold;
   font-size: 26px;
   margin-bottom: 15px;
   line-height: 1;
+  cursor: url("../../assets/a-pointer.png"), auto;
 }
 
 .post__buttons {

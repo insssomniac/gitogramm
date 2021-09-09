@@ -27,10 +27,6 @@ export default {
     return { isActive, emitOnFinish, setActive, indicator }
   },
   mounted () {
-    // setTimeout(
-    //   this.setActive,
-    //   1000
-    // )
     if (!this.isLastSlide) {
       this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
     }

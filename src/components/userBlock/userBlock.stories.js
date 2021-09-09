@@ -9,6 +9,10 @@ export default {
     },
     username: {
       control: { type: 'text' }
+    },
+    variant: {
+      options: ['profile-picture-big', 'followed-user-item', 'card', 'none'],
+      control: { type: 'radio' }
     }
   }
 }

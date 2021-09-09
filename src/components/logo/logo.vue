@@ -1,5 +1,5 @@
 <template>
-  <div :class="['c-logo', variant]">Gitogram /</div>
+  <div :class="['c-logo', variant]" @click="$router.push({name: 'feeds'})">Gitogram /</div>
 </template>
 
 <script>
@@ -18,6 +18,7 @@ export default {
 .c-logo {
   font-size: 32px;
   font-weight: bold;
+  cursor: url("../../assets/a-pointer.png"), auto;
 }
 
 .logo-black { // variant
