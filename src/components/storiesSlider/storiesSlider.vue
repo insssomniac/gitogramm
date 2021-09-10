@@ -24,7 +24,8 @@
 <script>
 import { slide } from '../slide'
 import { mapState, mapActions } from 'vuex'
-import useSlider from '../composables/useSlider'
+// import useSlider from '../composables/useSlider'
+import { ref } from 'vue'
 
 export default {
   name: 'storiesSlider',
@@ -36,13 +37,11 @@ export default {
       type: Number
     }
   },
-  setup (props, { attr, slots, emit }) {
-    const {
-      slideNdx,
-      sliderPosition,
-      loading,
-      buttonsShown
-    } = useSlider()
+  setup (props, { attr, slots, emit, refs }) {
+    const slideNdx = ref(0)
+    const sliderPosition = ref(0)
+    const loading = ref(false)
+    const buttonsShown = ref(true)
 
     return { slideNdx, sliderPosition, loading, buttonsShown }
   },
