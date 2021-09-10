@@ -11,7 +11,7 @@
     "build-storybook": "build-storybook",
     "gh-pages-deploy": "node scripts/gh-pages-deploy.js",
     "storybook": "start-storybook -p 6006",
-    "test": "jest"
+    "test": "jest --env=jsdom"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -19,6 +19,7 @@
     "normalize.css": "^8.0.1",
     "vue": "^3.2.10",
     "vue-router": "4",
+    "vue-template-compiler": "^2.6.14",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
@@ -32,7 +33,6 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-unit-jest": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.2.10",
     "@vue/eslint-config-standard": "^5.1.2",
@@ -41,8 +41,9 @@
     "babel-eslint": "^10.1.0",
     "babel-jest": "^27.1.1",
     "babel-loader": "^8.2.2",
-    "eslint": "^6.7.2",
+    "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
@@ -55,6 +56,7 @@
     "sass-loader": "^8.0.2",
     "typescript": "~3.9.3",
     "vue-jest": "^5.0.0-0",
-    "vue-loader": "^16.5.0"
+    "vue-loader": "^15.9.8",
+    "vue3-jest": "^27.0.0-alpha.1"
   }
 }

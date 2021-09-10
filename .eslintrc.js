@@ -1,11 +1,14 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
+    'jest/globals': true
   },
   extends: [
     'plugin:vue/vue3-essential',
-    '@vue/standard'
+    '@vue/standard',
+    'eslint:recommended',
+    'plugin:jest/recommended'
   ],
   parserOptions: {
     parser: 'babel-eslint'
@@ -17,21 +20,9 @@ module.exports = {
   overrides: [
     {
       files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
-      }
-    },
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)'
-      ],
-      env: {
-        jest: true
-      }
+        '**/__tests__/**/*.[jt]s?(x)',
+        '**/(*.)+(spec|test).[jt]s?(x)'
+      ]
     }
   ]
 }

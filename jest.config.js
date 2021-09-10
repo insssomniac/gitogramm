@@ -4,12 +4,9 @@ module.exports = {
     'json',
     'vue'
   ],
-
   transform: {
-    '.*\\.(vue)$': 'vue-jest',
-    '.*\\.(js)$': 'babel-jest',
-    '^.+\\.vue$': 'vue-jest'
+    '.*\\.(vue)$': 'vue3-jest',
+    '.*\\.(js)$': 'babel-jest'
   },
-
-  preset: '@vue/cli-plugin-unit-jest'
+  testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/(*.)+(spec|test).[jt]s?(x)']
 }
