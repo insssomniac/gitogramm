@@ -5,12 +5,12 @@
         <div class="topline__container">
           <logo variant="logo-black" />
           <logged-as
-              :avatar="loggedUser.avatar_url" />
+              :avatar="user.data.avatar_url" />
         </div>
       </template>
       <template #content>
         <ul class="users">
-          <li class="users__item user" v-for="item in trendingsArr" :key="item.id">
+          <li class="users__item user" v-for="item in trendings.data" :key="item.id">
             <story-block
                 :avatar="item.owner.avatar_url"
                 :username="item.owner.login"
@@ -23,7 +23,7 @@
   </div>
   <div class="global-container feed-container">
     <ul class="feed">
-      <li class="post" v-for="item in starredArr" :key="item.id">
+      <li class="post" v-for="item in starred.data" :key="item.id">
         <post
             :avatar="item.owner.avatar_url"
             :username="item.owner.login"
@@ -49,7 +49,8 @@ import { loggedAs } from '../../components/loggedAs'
 import { storyBlock } from '../../components/storyBlock'
 import { post } from '../../components/post'
 import { postButtons } from '../../components/postButtons'
-import { mapState, mapActions } from 'vuex'
+import { useStore } from 'vuex'
+import { onMounted, computed } from 'vue'
 
 export default {
   name: 'feeds',
@@ -61,45 +62,33 @@ export default {
     post,
     postButtons
   },
-  emits: ['storyPress', 'toggleIssues'],
-  data () {
-    return {
-      trendingsArr: [],
-      starredArr: [],
-      loggedUser: {}
+  setup () {
+    const { dispatch, state } = useStore()
+
+    const getIssues = (id) => {
+      dispatch('repositories/fetchIssues', { id })
     }
-  },
-  computed: {
-    ...mapState({
-      trendings: state => state.repositories.trendings,
-      starred: state => state.repositories.starred,
-      user: state => state.user.user
-    })
-  },
-  methods: {
-    ...mapActions({
-      fetchTrendings: 'repositories/fetchTrendings',
-      fetchStarred: 'repositories/fetchStarred',
-      fetchIssues: 'repositories/fetchIssues',
-      getUser: 'user/getUser'
-    }),
-    convertDate (date) {
+
+    const convertDate = (date) => {
       const timestamp = Date.parse(date)
       const options = { day: 'numeric', month: 'long', year: 'numeric' }
 
       return new Intl.DateTimeFormat('en-GB', options).format(timestamp)
-    },
-    async getIssues (id) {
-      await this.fetchIssues({ id })
     }
-  },
-  async created () {
-    await this.fetchTrendings()
-    await this.fetchStarred()
-    await this.getUser()
-    this.trendingsArr = this.trendings.data
-    this.starredArr = this.starred.data
-    this.loggedUser = this.user.data
+
+    onMounted(() => {
+      dispatch('repositories/fetchTrendings')
+      dispatch('repositories/fetchStarred')
+      dispatch('user/getUser')
+    })
+
+    return {
+      trendings: computed(() => state.repositories.trendings),
+      starred: computed(() => state.repositories.starred),
+      user: computed(() => state.user.user),
+      getIssues,
+      convertDate
+    }
   }
 }
 </script>
