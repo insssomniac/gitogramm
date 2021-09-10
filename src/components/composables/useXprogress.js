@@ -4,7 +4,6 @@ export default (props, emit) => {
   const isActive = ref(false)
   const emitOnFinish = () => {
     emit('onFinish')
-    console.log('onFinish')
   }
   const setActive = () => {
     isActive.value = true
@@ -12,7 +11,6 @@ export default (props, emit) => {
   const indicator = ref(null)
 
   onMounted(() => {
-    console.log(!props.isLastSlide)
     setTimeout(
       setActive, 1000
     )

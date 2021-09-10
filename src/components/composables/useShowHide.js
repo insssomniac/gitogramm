@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-export default (emit) => {
+export default (props, emit) => {
   const shown = ref(false)
   const toggle = (isOpened) => {
     shown.value = isOpened
