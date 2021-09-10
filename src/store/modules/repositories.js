@@ -102,7 +102,8 @@ export default {
         throw e
       }
     },
-    async starRepo ({ commit, getters }, id) {
+    async starRepo ({ commit, getters }, { id }) {
+      console.log(id)
       const { name: repo, owner } = getters.getRepoById(id)
 
       commit('SET_FOLLOWING', {
@@ -135,7 +136,7 @@ export default {
         })
       }
     },
-    async unstarRepo ({ commit, getters }, id) {
+    async unstarRepo ({ commit, getters }, { id }) {
       const { name: repo, owner } = getters.getRepoById(id)
 
       commit('SET_FOLLOWING', {

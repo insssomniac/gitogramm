@@ -29,7 +29,7 @@
         variant="button--big"
         :theme="data.following.status ? 'button--theme-grey' : 'button--theme-green'"
         :loading="data.following.loading"
-        @click="$emit(data.following.status ? 'onUnfollow' : 'onFollow', data.id)"
+        @click="$emit(data.following.status ? 'onUnfollow' : 'onFollow')"
     >
       {{ data.following.status ? 'Unfollow' : 'Follow' }}
     </x-button>
