@@ -59,7 +59,7 @@ export default {
   async mounted () {
     await this.fetchTrendings()
     if (this.initialSlide) {
-      const ndx = this.trendings.findIndex(item => item.id === this.initialSlide)
+      const ndx = this.trendings.data.findIndex(item => item.id === this.initialSlide)
       await this.handleSlide(ndx)
     } else {
       await this.loadReadme()
