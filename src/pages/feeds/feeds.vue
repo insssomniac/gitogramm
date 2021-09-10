@@ -29,7 +29,7 @@
             :username="item.owner.login"
             :date="convertDate(item.created_at)"
             :repoIssues="item.issues"
-            @toggleIssues="getIssues(item.id)"
+            @loadContent="getIssues(item.id)"
         >
           <template #repository-info>
             <a :href="item.html_url" class="post__title"> {{ item.full_name }} </a>
