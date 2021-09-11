@@ -5,7 +5,7 @@
       <div class="topline__container">
         <logo variant="logo-black" />
         <logged-as
-            :avatar="loggedUser.avatar_url" />
+            :avatar="user.data.avatar_url" />
       </div>
     </template>
   </topline>
@@ -15,16 +15,16 @@
       <h2 class="title">My profile</h2>
       <user-block
         :variant="userBlockProfileVariant"
-        :avatar="loggedUser.avatar_url"
-        :username="loggedUser.login"
-        :profile-name="loggedUser.name">
+        :avatar="user.data.avatar_url"
+        :username="user.data.login"
+        :profile-name="user.data.name">
         <template #userInfo>
           <div class="info" @click="showRepositories">
-            <span class="info__count">{{ loggedUser.public_repos }}</span>
+            <span class="info__count">{{ user.data.public_repos }}</span>
             <span :class="['info__text', {active: isShowRepositories === true}]">repositories</span>
           </div>
           <div class="info" @click="showFollowing">
-            <span class="info__count">{{ loggedUser.following }}</span>
+            <span class="info__count">{{ user.data.following }}</span>
             <span :class="['info__text', {active: isShowRepositories === false}]">following</span>
           </div>
         </template>
@@ -32,16 +32,16 @@
     </div>
     <div class="content">
       <div class="show-repositories" v-if="isShowRepositories">
-        <div class="preloader" v-if="repositories.loading">
+        <div class="preloader" v-if="userRepos.loading">
           <preloader/>
         </div>
         <div class="payload" v-else>
           <div class="content__topline">
             <div class="content__title">Repositories</div>
-            <div class="content__quantity">{{ repositories.data?.length }}</div>
+            <div class="content__quantity">{{ userRepos.data?.length }}</div>
           </div>
           <ul class="feed">
-            <li class="post" v-for="item in repositories.data" :key="item.id">
+            <li class="post" v-for="item in userRepos.data" :key="item.id">
               <div class="repository-info">
                 <a :href="item.html_url" class="post__title"> {{ item.full_name }} </a>
                 <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
@@ -52,16 +52,16 @@
         </div>
       </div>
       <div class="show-following" v-else>
-        <div class="preloader" v-if="followingUsers.loading">
+        <div class="preloader" v-if="userFollowing.loading">
           <preloader/>
         </div>
         <div class="payload" v-else>
           <div class="content__topline">
             <div class="content__title">Following</div>
-            <div class="content__quantity">{{ followingUsers.data?.length }}</div>
+            <div class="content__quantity">{{ userFollowing.data?.length }}</div>
           </div>
           <ul class="feed">
-            <li class="followed-user__item followed-user" v-for="item in followingUsers.data" :key="item.id">
+            <li class="followed-user__item followed-user" v-for="item in userFollowing.data" :key="item.id">
               <user-block
                   :variant="userBlockListVariant"
                   :avatar="item.avatar_url"
@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { useStore } from 'vuex'
 import { logo } from '../../components/logo'
 import { loggedAs } from '../../components/loggedAs'
 import { topline } from '../../components/topline'
@@ -93,6 +93,7 @@ import { userBlock } from '../../components/userBlock'
 import { postButtons } from '../../components/postButtons'
 import { xButton } from '../../components/xButton'
 import { preloader } from '../../components/preloader'
+import { ref, computed, onMounted } from 'vue'
 
 export default {
   name: 'profile',
@@ -105,44 +106,42 @@ export default {
     xButton,
     preloader
   },
-  emits: ['onLogout'],
-  data () {
-    return {
-      loggedUser: {},
-      repositories: [],
-      followingUsers: [],
-      userBlockProfileVariant: 'profile-picture-big',
-      userBlockListVariant: 'followed-user-item',
-      isShowRepositories: true
+  setup () {
+    const { dispatch, state } = useStore()
+
+    const userBlockProfileVariant = 'profile-picture-big'
+    const userBlockListVariant = 'followed-user-item'
+    const isShowRepositories = ref(true)
+
+    const fetchUserFollowing = () => {
+      dispatch('user/fetchUserFollowing')
     }
-  },
-  computed: {
-    ...mapState({
-      user: state => state.user.user,
-      userRepos: state => state.user.userRepos,
-      userFollowing: state => state.user.userFollowing
+
+    const showRepositories = () => {
+      isShowRepositories.value = true
+    }
+
+    const showFollowing = async () => {
+      isShowRepositories.value = false
+      await fetchUserFollowing()
+    }
+
+    onMounted(() => {
+      dispatch('user/getUser')
+      dispatch('user/fetchUserRepos')
     })
-  },
-  methods: {
-    ...mapActions({
-      getUser: 'user/getUser',
-      fetchUserRepos: 'user/fetchUserRepos',
-      fetchUserFollowing: 'user/fetchUserFollowing'
-    }),
-    showRepositories () {
-      this.isShowRepositories = true
-    },
-    async showFollowing () {
-      this.isShowRepositories = false
-      await this.fetchUserFollowing()
-      this.followingUsers = this.userFollowing
+
+    return {
+      userBlockProfileVariant,
+      userBlockListVariant,
+      isShowRepositories,
+      user: computed(() => state.user.user),
+      userRepos: computed(() => state.user.userRepos),
+      userFollowing: computed(() => state.user.userFollowing),
+      fetchUserFollowing,
+      showRepositories,
+      showFollowing
     }
-  },
-  async created () {
-    await this.getUser()
-    this.loggedUser = this.user.data
-    await this.fetchUserRepos()
-    this.repositories = this.userRepos
   }
 }
 </script>
