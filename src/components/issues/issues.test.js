@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import issues from './issues'
 
 describe('post issues', () => {
-  it('should emit the loadContent action', async () => {
+  it('should emit the toggleIssues action', async () => {
     const wrapper = mount(issues)
     await wrapper.find('.toggler button').trigger('click')
     expect(wrapper.emitted().toggleIssues.length).toBe(1)
