@@ -1,13 +1,15 @@
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 
-export default (props, refs) => {
+export default (props) => {
   const { dispatch, state } = useStore()
 
   const slideNdx = ref(0)
   const sliderPosition = ref(0)
   const loading = ref(false)
   const buttonsShown = ref(true)
+  const slider = ref(null)
+  const slide = ref(null)
 
   const trendings = computed(() => state.repositories.trendings)
 
@@ -66,12 +68,35 @@ export default (props, refs) => {
     dispatch('repositories/unstarRepo', { id })
   }
 
+  onMounted(async () => {
+    await dispatch('repositories/fetchTrendings')
+    if (props.initialSlide) {
+      const ndx = trendings.value.data.findIndex(item => item.id === props.initialSlide)
+      await handleSlide(ndx)
+    } else {
+      await loadReadme()
+    }
+  })
+
+  const moveSlide = (ndx) => {
+    sliderPosition.value = slide.value.clientWidth * ndx
+    slider.value.style.transform = `translateX(-${sliderPosition.value}px)`
+    slideNdx.value = ndx
+  }
+
+  const handleSlide = async (ndx) => {
+    moveSlide(ndx)
+    await loadReadme()
+  }
+
   return {
     trendings: computed(() => state.repositories.trendings),
     slideNdx,
     sliderPosition,
     loading,
     buttonsShown,
+    slider,
+    slide,
     activeBtns,
     fetchReadmeActiveSlide,
     lastSlide,
@@ -79,6 +104,8 @@ export default (props, refs) => {
     loadReadme,
     getStoryData,
     starRepo,
-    unstarRepo
+    unstarRepo,
+    moveSlide,
+    handleSlide
   }
 }

@@ -25,17 +25,6 @@ export default {
     } = useXprogress(props, emit)
 
     return { isActive, emitOnFinish, setActive, indicator }
-  },
-  mounted () {
-    if (!this.isLastSlide) {
-      this.$refs.indicator.addEventListener('transitionend', this.emitOnFinish)
-    }
-  },
-  beforeUnmount () {
-    this.$refs.indicator.removeEventListener(
-      'transitionend',
-      this.emitOnFinish
-    )
   }
 }
 </script>

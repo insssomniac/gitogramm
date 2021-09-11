@@ -14,13 +14,13 @@ export default (props, emit) => {
     setTimeout(
       setActive, 1000
     )
-    // if (!props.isLastSlide) {
-    //   indicator.value.addEventListener('transitionend', emitOnFinish())
-    // }
+    if (!props.isLastSlide) {
+      indicator.value.addEventListener('transitionend', emitOnFinish)
+    }
   })
 
   onBeforeUnmount(() => {
-    // indicator.value.removeEventListener('transitionend', emitOnFinish())
+    indicator.value.removeEventListener('transitionend', emitOnFinish)
   })
 
   return { isActive, emitOnFinish, setActive, indicator }

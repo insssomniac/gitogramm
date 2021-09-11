@@ -23,7 +23,6 @@
 
 <script>
 import { slide } from '../slide'
-import { mapActions } from 'vuex'
 import useSlider from '../composables/useSlider'
 
 export default {
@@ -36,34 +35,8 @@ export default {
       type: Number
     }
   },
-  setup (props, { attr, slots, emit }) {
+  setup (props) {
     return { ...useSlider(props) }
-  },
-  methods: {
-    ...mapActions({
-      fetchTrendings: 'repositories/fetchTrendings',
-      checkStatus: 'repositories/checkStatus'
-    }),
-    moveSlide (ndx) {
-      const distance = this.$refs.slide.clientWidth
-
-      this.sliderPosition = distance * ndx
-      this.$refs.slider.style.transform = `translateX(-${this.sliderPosition}px)`
-      this.slideNdx = ndx
-    },
-    async handleSlide (ndx) {
-      this.moveSlide(ndx)
-      await this.loadReadme()
-    }
-  },
-  async mounted () {
-    await this.fetchTrendings()
-    if (this.initialSlide) {
-      const ndx = this.trendings.data.findIndex(item => item.id === this.initialSlide)
-      await this.handleSlide(ndx)
-    } else {
-      await this.loadReadme()
-    }
   }
 }
 </script>

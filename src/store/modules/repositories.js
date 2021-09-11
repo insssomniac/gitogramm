@@ -82,7 +82,7 @@ export default {
     },
     async fetchStarred ({ commit }) {
       try {
-        const limit = 10
+        const limit = 16
         const response = await api.starred.getStarredRepos({ limit })
         const data = await response.data
         commit('SET_STARRED_DATA', data)

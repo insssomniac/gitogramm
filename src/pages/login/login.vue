@@ -34,8 +34,8 @@ export default {
     icon,
     xButton
   },
-  methods: {
-    getCode () {
+  setup () {
+    const getCode = () => {
       const githubAuthUrl = 'https://github.com/login/oauth/authorize'
       const params = new URLSearchParams()
       params.append('client_id', env.clientId)
@@ -44,31 +44,38 @@ export default {
 
       window.location.href = `${githubAuthUrl}?${params}`
     }
-  },
-  async created () {
-    const code = new URLSearchParams(window.location.search).get('code')
-    if (code) {
-      try {
-        const response = await fetch('https://webdev-api.loftschool.com/github', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            clientId: env.clientId,
-            code,
-            clientSecret: env.clientSecret
-          })
-        })
-        const { token } = await response.json()
 
-        sessionStorage.setItem('token', token)
-      } catch (e) {
-        console.log(e)
-      } finally {
-        location.replace('/')
+    // to do on created (there is no "onCreated" hook in composition API):
+    const created = async () => {
+      const code = new URLSearchParams(window.location.search).get('code')
+      if (code) {
+        try {
+          const response = await fetch('https://webdev-api.loftschool.com/github', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              clientId: env.clientId,
+              code,
+              clientSecret: env.clientSecret
+            })
+          })
+          const { token } = await response.json()
+
+          sessionStorage.setItem('token', token)
+        } catch (e) {
+          console.log(e)
+        } finally {
+          location.replace('/')
+        }
       }
     }
+
+    // run it!
+    created()
+
+    return { getCode }
   }
 }
 </script>
