@@ -16,7 +16,7 @@
         </div>
       </div>
       <div v-else>
-        <ul class="comments__list"  v-if="repoIssues.data?.length">
+        <ul class="comments__list"  v-if="repoIssues.data !== undefined && repoIssues.data.length">
           <li class="comments__item" v-for="issue in repoIssues.data" :key="issue.id">
             <comment :username="issue.user.login" :text="issue.title" :url="issue.html_url"/>
           </li>
