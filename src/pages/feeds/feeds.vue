@@ -34,7 +34,13 @@
           <template #repository-info>
             <a :href="item.html_url" class="post__title"> {{ item.full_name }} </a>
             <div v-if="item.description" class="post__desc"> {{ item.description }} </div>
-            <post-buttons class="post__buttons" :stars="item.stargazers_count" :forks="item.forks" />
+            <post-buttons
+                class="post__buttons"
+                :stars="item.stargazers_count"
+                :forks="item.forks"
+                starred
+                @unstar="unstarRepo(item.id)"
+            />
           </template>
         </post>
       </li>
@@ -82,12 +88,18 @@ export default {
       dispatch('user/getUser')
     })
 
+    const unstarRepo = async (id) => {
+      await dispatch('repositories/unstarRepo', { id })
+      await dispatch('repositories/fetchStarred')
+    }
+
     return {
       trendings: computed(() => state.repositories.trendings),
       starred: computed(() => state.repositories.starred),
       user: computed(() => state.user.user),
       getIssues,
-      convertDate
+      convertDate,
+      unstarRepo
     }
   }
 }

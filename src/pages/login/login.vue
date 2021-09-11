@@ -45,7 +45,7 @@ export default {
       window.location.href = `${githubAuthUrl}?${params}`
     }
 
-    // to do on created (there is no "onCreated" hook in composition API):
+    // to do some things on created (there is no "onCreated" hook in composition API):
     const created = async () => {
       const code = new URLSearchParams(window.location.search).get('code')
       if (code) {

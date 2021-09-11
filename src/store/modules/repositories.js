@@ -14,14 +14,9 @@ export default {
     }
   },
   getters: {
-    getRepoById: (state) => (id, from = 'trendings') => {
-      if (from === 'trendings') {
-        return state.trendings.data.find(item => item.id === id)
-      }
-      if (from === 'starred') {
-        return state.starred.data.find(item => item.id === id)
-      }
-      return {}
+    getRepoById: (state) => (id) => {
+      const allRepos = state.trendings.data.concat(state.starred.data)
+      return allRepos.find(item => item.id === id)
     }
   },
   mutations: {
@@ -103,7 +98,6 @@ export default {
       }
     },
     async starRepo ({ commit, getters }, { id }) {
-      console.log(id)
       const { name: repo, owner } = getters.getRepoById(id)
 
       commit('SET_FOLLOWING', {

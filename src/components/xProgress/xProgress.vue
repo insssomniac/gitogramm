@@ -18,13 +18,13 @@ export default {
   emits: ['onFinish'],
   setup (props, { emit }) {
     const {
+      indicator,
       isActive,
       emitOnFinish,
-      setActive,
-      indicator
+      setActive
     } = useXprogress(props, emit)
 
-    return { isActive, emitOnFinish, setActive, indicator }
+    return { indicator, isActive, emitOnFinish, setActive }
   }
 }
 </script>

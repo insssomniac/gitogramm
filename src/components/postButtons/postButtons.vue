@@ -1,6 +1,6 @@
 <template>
-  <div class="c-post-buttons">
-    <button class="post-button">
+  <div class="c-post-buttons" :class="{ active: starred }">
+    <button class="post-button" @click="$emit(starred ? 'unstar' : 'star')">
       <span class="icon-star">
         <icon name="star"/>
       </span>
@@ -33,6 +33,10 @@ export default {
     forks: {
       type: Number,
       required: true
+    },
+    starred: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -56,6 +60,14 @@ export default {
   cursor: url("../../assets/a-pointer.png"), auto;
   color: #24292E;
   border-right: 1px solid rgba(27, 31, 35, 0.15);
+
+  &:hover {
+    background: #F0F0F0;
+
+    .icon-star {
+      color: #586069;
+    }
+  }
 }
 
 .icon-star, .icon-fork {
@@ -74,6 +86,14 @@ export default {
 .icon-fork {
   width: 12px;
   height: 12px;
+}
+
+.active .icon-star {
+  color: #31AE54;
+
+  &:hover {
+    color: #586069;
+  }
 }
 
 .post-stars {

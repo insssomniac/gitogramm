@@ -19,6 +19,13 @@ export const getUserFollowing = () => {
   })
 }
 
+export const unfollowUser = (username) => {
+  return makeRequest({
+    url: `/user/following/${username}`,
+    method: 'delete'
+  })
+}
+
 export const getToken = (code) => {
   return makeRequest({
     url: 'https://webdev-api.loftschool.com/github',

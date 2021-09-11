@@ -1,16 +1,23 @@
 <template>
 <button
     :class="[
-        'c-button',
-        {'hover-text': withHoverText}, variant, theme
+        'c-button', variant, theme, {'on-hover-text': upHere && withHoverText}
     ]"
     :disabled="disabled"
+    @mouseover="upHere = true"
+    @mouseleave="upHere = false"
 >
   <span class="button__text">
     <span v-if="loading" class="loader">
       <preloader variant="preloader--white"/>
     </span>
-    <slot v-else></slot>
+    <span v-else>
+      <span v-if="withHoverText">
+        <span v-if="upHere">{{ hoverText }}</span>
+        <slot v-else></slot>
+      </span>
+      <slot v-else></slot>
+    </span>
   </span>
 </button>
 </template>
@@ -18,6 +25,7 @@
 <script>
 
 import { preloader } from '../preloader'
+import { computed, ref } from 'vue'
 
 export default {
   name: 'xButton',
@@ -37,9 +45,12 @@ export default {
   components: {
     preloader
   },
-  computed: {
-    withHoverText () {
-      return this.hoverText?.length
+  setup (props) {
+    const upHere = ref(false)
+
+    return {
+      upHere,
+      withHoverText: computed(() => props.hoverText?.length)
     }
   }
 }
@@ -79,7 +90,7 @@ export default {
   background: #31AE54;
 }
 
-.button--theme-grey {
+.button--theme-grey, .on-hover-text {
   background: #9E9E9E;
 }
 

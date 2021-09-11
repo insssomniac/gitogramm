@@ -61,17 +61,19 @@
             <div class="content__quantity">{{ userFollowing.data?.length }}</div>
           </div>
           <ul class="feed">
-            <li class="followed-user__item followed-user" v-for="item in userFollowing.data" :key="item.id">
+            <li class="followed-user__item followed-user" v-for="user in userFollowing.data" :key="user.id">
               <user-block
                   :variant="userBlockListVariant"
-                  :avatar="item.avatar_url"
-                  :username="item.login"
-                  :profile-name="item.type"
+                  :avatar="user.avatar_url"
+                  :username="user.login"
+                  :profile-name="user.type"
               />
               <x-button
                   class="followed-user__button"
                   variant="button--sm"
                   theme="button--theme-green"
+                  :hover-text="'unfollow'"
+                  @click="unfollowUser(user.login)"
               >
                 following
               </x-button>
@@ -93,7 +95,7 @@ import { userBlock } from '../../components/userBlock'
 import { postButtons } from '../../components/postButtons'
 import { xButton } from '../../components/xButton'
 import { preloader } from '../../components/preloader'
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 
 export default {
   name: 'profile',
@@ -117,7 +119,7 @@ export default {
       dispatch('user/fetchUserFollowing')
     }
 
-    const showRepositories = () => {
+    const showRepositories = async () => {
       isShowRepositories.value = true
     }
 
@@ -126,10 +128,18 @@ export default {
       await fetchUserFollowing()
     }
 
-    onMounted(() => {
-      dispatch('user/getUser')
-      dispatch('user/fetchUserRepos')
-    })
+    const unfollowUser = async (username) => {
+      await dispatch('user/unfollowUser', { username })
+      await fetchUserFollowing()
+    }
+
+    // get the user and user repos on created
+    const created = async () => {
+      await dispatch('user/getUser')
+      await dispatch('user/fetchUserRepos')
+    }
+
+    created()
 
     return {
       userBlockProfileVariant,
@@ -140,7 +150,8 @@ export default {
       userFollowing: computed(() => state.user.userFollowing),
       fetchUserFollowing,
       showRepositories,
-      showFollowing
+      showFollowing,
+      unfollowUser
     }
   }
 }

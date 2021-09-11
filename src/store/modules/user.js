@@ -41,6 +41,7 @@ export default {
         console.log(e)
       }
     },
+
     async fetchUserRepos ({ commit, state }) {
       commit('SET_USER_REPOS', { loading: true })
       try {
@@ -53,6 +54,7 @@ export default {
         console.error(e)
       }
     },
+
     async fetchUserFollowing ({ commit }) {
       commit('SET_USER_FOLLOWING', { loading: true })
       try {
@@ -62,6 +64,14 @@ export default {
       } catch (e) {
         commit('SET_USER_FOLLOWING', { loading: false })
         console.error('following: no username')
+        console.error(e)
+      }
+    },
+
+    async unfollowUser ({ commit }, { username }) {
+      try {
+        await api.client.unfollowUser(username)
+      } catch (e) {
         console.error(e)
       }
     }
