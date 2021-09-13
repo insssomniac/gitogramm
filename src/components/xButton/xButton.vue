@@ -11,9 +11,9 @@
     <span v-if="loading" class="loader">
       <preloader variant="preloader--white"/>
     </span>
-    <span v-else>
-      <span v-if="withHoverText">
-        <span v-if="upHere">{{ hoverText }}</span>
+    <span class="button__slot" v-else>
+      <span class="button__slot" v-if="withHoverText">
+        <span class="button__slot" v-if="upHere">{{ hoverText }}</span>
         <slot v-else></slot>
       </span>
       <slot v-else></slot>
@@ -100,6 +100,12 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
+}
+
+.button__slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .loader {

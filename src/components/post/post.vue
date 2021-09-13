@@ -11,7 +11,7 @@
     </div>
     <issues
       :repo-issues="repoIssues"
-      @toggleIssues="$emit('loadContent')"
+      @loadIssues="$emit('loadContent')"
     />
     <div class="post__date">{{ date }}</div>
   </div>

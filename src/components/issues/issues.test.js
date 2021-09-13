@@ -5,7 +5,7 @@ describe('post issues', () => {
   it('should emit the toggleIssues action', async () => {
     const wrapper = mount(issues)
     await wrapper.find('.toggler button').trigger('click')
-    expect(wrapper.emitted().toggleIssues.length).toBe(1)
+    expect(wrapper.emitted().loadIssues.length).toBe(1)
   })
 
   it('should draw the elements list', async () => {
@@ -27,5 +27,25 @@ describe('post issues', () => {
 
     await wrapper.find('.toggler button').trigger('click')
     expect(wrapper.findAll('.comments__item').length).toBe(6)
+  })
+
+  it('should not emit toggleIssues action if list of issues exists', async () => {
+    const issue = {
+      title: 'test-title',
+      user: { login: 'test-login' },
+      html_url: 'test-url'
+    }
+
+    const wrapper = mount(issues, {
+      propsData: {
+        repoIssues: {
+          loading: false,
+          data: Array.from({ length: 6 }).map(x => issue)
+        }
+      }
+    })
+
+    await wrapper.find('.toggler button').trigger('click')
+    expect(wrapper.emitted().loadIssues).toBeUndefined()
   })
 })
