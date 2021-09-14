@@ -25,6 +25,7 @@ const getIssuesData = async () => {
 }
 
 it('should request issues', async () => {
-  await getIssuesData()
+  const response = await getIssuesData()
+  console.log(response)
   expect(mockFn.mock.calls.length).toBe(1)
 })
