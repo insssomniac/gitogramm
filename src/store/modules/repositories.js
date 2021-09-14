@@ -196,27 +196,26 @@ export default {
         })
       }
     },
-    async fetchIssues ({ commit, getters }, { id }) {
-      const currentRepo = getters.getRepoById(id, 'starred')
-      const { name: repo, owner } = currentRepo
+    async fetchIssues ({ commit, getters }, { item }) {
+      const { name, owner } = item
 
-      if (currentRepo.issues !== undefined) return
+      if (item.issues !== undefined) return
 
       commit('SET_ISSUES_DATA', {
-        id,
+        id: item.id,
         loading: true
       })
 
       try {
-        const response = await api.issues.getIssues({ owner: owner.login, repo })
+        const response = await api.issues.getIssues({ owner: owner.login, repo: name })
         commit('SET_ISSUES_DATA', {
-          id,
+          id: item.id,
           loading: false,
           data: response.data
         })
       } catch (e) {
         commit('SET_ISSUES_DATA', {
-          id,
+          id: item.id,
           loading: false
         })
         console.log('fetchIssues error: ' + e)

@@ -29,7 +29,7 @@
             :username="item.owner.login"
             :date="convertDate(item.created_at)"
             :repoIssues="item.issues"
-            @loadContent="getIssues(item.id)"
+            @loadContent="getIssues(item)"
         >
           <template #repository-info>
             <a :href="item.html_url" class="post__title"> {{ item.full_name }} </a>
@@ -71,8 +71,9 @@ export default {
   setup () {
     const { dispatch, state } = useStore()
 
-    const getIssues = (id) => {
-      dispatch('repositories/fetchIssues', { id })
+    const getIssues = (item) => {
+      // console.log(item)
+      dispatch('repositories/fetchIssues', { item })
     }
 
     const convertDate = (date) => {
