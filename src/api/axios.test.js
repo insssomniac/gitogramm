@@ -11,11 +11,13 @@ const params = {
 }
 const issues = [{ id: '123', title: 'Test issue' }]
 
-axios.mockImplementation(() => Promise.resolve({
+const mockFn = jest.fn(() => Promise.resolve({
   data: {
     results: issues
   }
 }))
+
+axios.mockImplementation(mockFn)
 
 const getIssuesData = async () => {
   const response = await api.issues.getIssues(params)
@@ -23,5 +25,6 @@ const getIssuesData = async () => {
 }
 
 it('should request issues', async () => {
-  console.log(await getIssuesData())
+  await getIssuesData()
+  expect(mockFn.mock.calls.length).toBe(1)
 })
